@@ -1,0 +1,52 @@
+.instructions {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.instructions > h1 {
+  color: #859900;
+}
+
+.instruction-box {
+  display: block;
+  position: relative;
+  text-align: left;
+  padding-left: 50px;
+  width: 400px;
+  height: 60px;
+}
+
+.instruction-box > .key-box {
+  position: relative;
+  float: left;
+  height: 50px;
+  width: 50px;
+  border: 5px solid #859900;
+  margin-left: 50px;
+  margin-right: 20px;
+}
+
+.instruction-box > .key-box > .arrow {
+  position: relative;
+  top: 18px;
+  left: 16px;
+  color: orange;
+}
+
+.instruction-box > p {
+  position: relative;
+  height: 60px;
+  line-height: 60px;
+  font-size: 1.5rem;
+}
+
+.key-box > p {
+  font-size: 1.5rem;
+  margin: 0;
+  line-height: 50px;
+  text-align: center;
+  color: orange;
+}

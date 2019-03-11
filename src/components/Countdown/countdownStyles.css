@@ -1,0 +1,8 @@
+.countdown {
+  position: absolute;
+  color: #b58900;
+  font-size: 9rem;
+  font-family: sans-serif;
+  left: 45%;
+  top: 40%;
+}

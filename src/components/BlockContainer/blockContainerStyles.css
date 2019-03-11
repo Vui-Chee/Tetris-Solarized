@@ -1,0 +1,9 @@
+.block-container {
+  position: relative;
+  float: left;
+  width: 311px;
+  height: 559px;
+  background: #002b36;
+  border: solid 5px;
+  border-color: #586e75;
+}

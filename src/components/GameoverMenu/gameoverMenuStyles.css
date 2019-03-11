@@ -1,0 +1,63 @@
+.gameover-menu {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.gameover-menu > button {
+  position: relative;
+  height: 50px;
+  width: 70px;
+  background: #839496;
+  color: white;
+  font-size: 1.5rem;
+  border: solid 2px #eee8d5;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  outline: none;
+}
+
+.gameover-menu > button:hover {
+  background: #eee8d5;
+  color: black;
+}
+
+.gameover-menu > input {
+  position: relative;
+  margin: 10px 30px 20px 30px;
+  padding: 10px;
+  background: #073642;
+  color: white;
+  height: 30px;
+  width: 200px;
+  border: 3px solid white;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+input:focus {
+  color: #b58900;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.gameover-menu > input::placeholder {
+  color: white;
+}
+
+.gameover-menu > label {
+  position: relative;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 1.2rem;
+  color: white;
+}
+
+#gameover-warning {
+  color: red;
+}

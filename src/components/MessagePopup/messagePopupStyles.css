@@ -1,0 +1,14 @@
+.message-popup {
+  display: block;
+  position: absolute;
+  width: 300px;
+  background: #586e75;
+  left: 50%;
+  margin-left: -150px;
+  top: 50%;
+  border: 3px solid white;
+  border-radius: 3px;
+  text-align: center;
+  z-index: 5;
+  opacity: 0.9;
+}

@@ -1,0 +1,16 @@
+.exit-menu > button {
+  height: 50px;
+  width: 100px;
+  background: #839496;
+  color: white;
+  font-size: 2rem;
+  border: 3px solid white;
+  border-radius: 3px;
+  margin: 0px 10px 20px 10px;
+  outline: none;
+}
+
+.exit-menu > button:hover {
+  background: white;
+  color: #073642;
+}

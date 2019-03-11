@@ -1,0 +1,38 @@
+.intro-page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.intro-page > h1 {
+  padding: 10px;
+}
+
+.intro-page > ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+  margin-top: 40%;
+}
+
+.intro-page > ul > li {
+  margin-bottom: 40px;
+  width: 250px;
+  border: 3px solid #eee8d5;
+  border-radius: 3px;
+  margin-left: calc(50% - 125px);
+}
+
+.intro-page-link {
+  display: block;
+  font-size: 2rem;
+  font-family: sans-serif;
+  color: white;
+  outline: none;
+  text-decoration: none;
+}
+
+.intro-page-link:hover {
+  color: #073642;
+  background: white;
+}

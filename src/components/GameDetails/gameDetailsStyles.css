@@ -1,0 +1,71 @@
+.game-details {
+  position: relative;
+  float: left;
+  height: 569px;
+  width: 150px;
+  margin-left: 20px;
+  text-align: center;
+}
+
+.game-details > b > p {
+  font-size: 1.3rem;
+}
+
+.game-details > button {
+  position: absolute;
+  height: 50px;
+  width: 100px;
+  left: calc(50% - 50px);
+  top: calc(100% - 50px);
+  background: #839496;
+  color: white;
+  font-size: 2rem;
+  border: 3px solid white;
+  border-radius: 3px;
+  outline: none;
+}
+
+.game-details > button:hover {
+  background: white;
+  color: #073642;
+}
+
+.game-details > .volume-icon {
+  position: absolute;
+  left: calc(50% - 50px);
+  top: calc(100% - 100px);
+  display: block;
+  height: 50px;
+  width: 50px;
+  color: white;
+}
+
+.game-details > .volume-icon:hover {
+  color: orange;
+}
+
+.game-details > .music-icon {
+  position: absolute;
+  left: 50%;
+  top: calc(100% - 100px);
+  display: block;
+  height: 50px;
+  width: 50px;
+  color: white;
+}
+
+.game-details > i > .music-icon-slash {
+  position: absolute;
+  left: calc(50% - 25px);
+  top: calc(100% - 35px);
+  display: block;
+  border-radius: 3px;
+  height: 4px;
+  width: 52px;
+  background: orange;
+  transform: rotate(-45deg);
+}
+
+.game-details > .music-icon:hover {
+  color: orange;
+}

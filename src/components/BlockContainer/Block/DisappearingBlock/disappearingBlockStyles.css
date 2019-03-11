@@ -1,0 +1,25 @@
+@keyframes fadingBlock {
+  0% {
+    background: none;
+  }
+  20% {
+    background: white;
+  }
+  40% {
+    background: none;
+  }
+  60% {
+    background: white;
+  }
+  80% {
+    background: none;
+  }
+  100% {
+    background: white;
+  }
+}
+
+.disappearing-block {
+  animation-name: fadingBlock;
+  animation-duration: 0.3s;
+}

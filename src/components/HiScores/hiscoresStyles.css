@@ -1,0 +1,45 @@
+.hiscores > h1 {
+  color: #859900;
+  text-align: center;
+}
+
+.hiscores > table {
+  width: 100%;
+  border: 3px solid orange;
+  border-radius: 3px;
+  color: white;
+  font-family: sans-serif;
+}
+
+.hiscores > table > thead {
+  font-size: 2rem;
+}
+
+.hiscores > table > tbody > tr {
+  text-align: center;
+  font-size: 1.6rem;
+}
+
+.return-link {
+  display: block;
+  margin-top: 20px;
+  width: 100px;
+  height: 50px;
+  background: #073642;
+  color: white;
+  vertical-align: middle;
+  line-height: 50px;
+  font-size: 1.3rem;
+  font-family: sans-serif;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  border: solid 3px white;
+  border-radius: 3px;
+  margin-left: calc(50% - 50px);
+}
+
+.return-link:hover {
+  background: white;
+  color: #073642;
+}
