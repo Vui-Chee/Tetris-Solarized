@@ -29,7 +29,7 @@ that is automatically dispatched.
 The Game container also handles the user events such as key presses, which can cause the piece to move in a
 certain direction or rotate or drop immediately. This events will dispatch a Redux action which fires off
 the reducer functions inside `src/reducers`. These reducer functions updates the Redux level state, which
-will be sent to the Game container via (React Redux)[https://react-redux.js.org/] as **props**. The Game
+will be sent to the Game container via [React Redux](https://react-redux.js.org/) as **props**. The Game
 container will receive these props through a lifecycle method called componentWillReceiveProps() which will
 allow the container to manage the game based on new updates to the Redux level state. 
 
