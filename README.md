@@ -1,6 +1,6 @@
 <img src="https://github.com/Vui-Chee/Tetris-Solarized/blob/master/tetris-header.png" height="250" width="100%" alt="tetris"/>
 
-A desktop standalone game of Tetris. 
+A desktop standalone game of Tetris. Click [here](https://vui-chee.github.io/tetris-solarized-web/) to play the demo.
 
 ## Overview of features
 1. User have to complete full rows of blocks to clear them.
