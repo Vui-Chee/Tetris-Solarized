@@ -2,6 +2,8 @@
 
 A desktop standalone game of Tetris. Click [here](https://vui-chee.github.io/tetris-solarized-web/) to play the demo.
 
+##### NOTE : Do not refresh the page otherwise the site will be lost. This happens because the web app is not server-side loaded.
+
 ## Overview of features
 1. User have to complete full rows of blocks to clear them.
 2. Clearing a full row yields 100 points.
