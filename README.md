@@ -1,7 +1,5 @@
 <img src="https://github.com/Vui-Chee/Tetris-Solarized/blob/master/tetris-header.png" height="250" width="100%" alt="tetris"/>
 
-NOTE : I am not currently maintaining it, hence some packages will out of date and the game will not run as expected.
-
 ## Overview of features
 1. User have to complete full rows of blocks to clear them.
 2. Clearing a full row yields 100 points.
