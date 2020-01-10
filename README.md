@@ -11,4 +11,9 @@
 ## How to run?
 Run `npm i` to install the packages and to start in development mode, run `npm start`. That's it.
 
+## How to play?
+* Use arrow keys to move pieces.
+* Press `p` to pause and `p` to resume.
+* Press `space` to drop piece immediately.
+
 <img src="https://github.com/Vui-Chee/Tetris-Solarized/blob/master/src/images/game-play.png" height="400" width="300" alt="tetris"/>
