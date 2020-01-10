@@ -10,3 +10,5 @@
 
 ## How to run?
 Run `npm i` to install the packages and to start in development mode, run `npm start`. That's it.
+
+<img src="https://github.com/Vui-Chee/Tetris-Solarized/blob/master/src/images/game-play.png" height="400" width="300" alt="tetris"/>
