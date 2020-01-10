@@ -1,7 +1,5 @@
 <img src="https://github.com/Vui-Chee/Tetris-Solarized/blob/master/tetris-header.png" height="250" width="100%" alt="tetris"/>
 
-NOTE : I am not currently maintaining it, hence some packages will out of date and the game will not run as expected.
-
 ## Overview of features
 1. User have to complete full rows of blocks to clear them.
 2. Clearing a full row yields 100 points.
@@ -10,6 +8,5 @@ NOTE : I am not currently maintaining it, hence some packages will out of date a
 5. Game ends when a block passes over the top of the container.
 6. If the score is within the top 10, it will be recorded.
 
-## How to package?
-Run `npm run package-mac`. Then `cd release-builds/tetris-solarized-darwin-x64/` and you will
-see a .app file. Click on it to run the app.
+## How to run?
+Run `npm i` to install the packages and to start in development mode, run `npm start`. That's it.
