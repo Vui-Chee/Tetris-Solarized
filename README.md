@@ -10,6 +10,7 @@
 
 ## How to run?
 Run `npm i` to install the packages and to start in development mode, run `npm start`. That's it.
+To produce the app, run `npm run package-mac`.
 
 ## How to play?
 * Use arrow keys to move pieces.
