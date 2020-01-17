@@ -16,3 +16,5 @@ jobs:
     - stage: build macos app
       script:
       - npm run package-mac
+
+after_success:
