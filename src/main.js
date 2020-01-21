@@ -28,6 +28,7 @@ function createWindow() {
     },
     center: true,
     resizable: false,
+    fullscreenable: false,
   });
 
   // Load html file into window.
