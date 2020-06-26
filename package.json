@@ -44,7 +44,7 @@
     "mini-css-extract-plugin": "0.5.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
     "style-loader": "0.23.1",
-    "terser-webpack-plugin": "1.2.2",
+    "terser-webpack-plugin": "3.0.6",
     "uglifyjs-webpack-plugin": "2.1.2",
     "url-loader": "1.1.2",
     "webpack": "^4.28.4",
