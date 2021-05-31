@@ -5,11 +5,11 @@ import {
   LEFT_KEYCODE,
   DOWN_KEYCODE,
   RIGHT_KEYCODE,
-} from '../../utils/constants';
+} from "../../utils/constants";
 
-import {MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT} from '../../actions/types';
+import { MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT } from "../../actions/types";
 
-import {combineBlocks} from './blocks';
+import { combineBlocks } from "./blocks";
 
 export function isOutOfBounds(x, y) {
   return (
@@ -30,14 +30,14 @@ export function isMoveValid(x, y, blocks) {
 
 // Combines blocks inside current falling piece into
 // the blocks that have already landed.
-export function instantLand({currentPiece, blocks}) {
+export function instantLand({ currentPiece, blocks }) {
   let minXDistance = 30;
 
-  currentPiece.blocks.forEach(block => {
+  currentPiece.blocks.forEach((block) => {
     minXDistance = Math.min(Math.abs(block.x - 18), minXDistance);
     // 2 cases, there are blocks underneath block,
     // or there is no block beneath.
-    Object.keys(blocks).forEach(rowIndex => {
+    Object.keys(blocks).forEach((rowIndex) => {
       if (parseInt(rowIndex) <= block.x) return;
       // Update vertical distance between falling block
       // and landed block.
@@ -52,7 +52,7 @@ export function instantLand({currentPiece, blocks}) {
   });
 
   let newPieceBlocks = [];
-  currentPiece.blocks.forEach(block => {
+  currentPiece.blocks.forEach((block) => {
     newPieceBlocks.push({
       ...block,
       x: block.x + minXDistance - 1,
@@ -62,13 +62,13 @@ export function instantLand({currentPiece, blocks}) {
   return combineBlocks(newPieceBlocks, blocks);
 }
 
-function areDirectionsAllowed({blocks}, directions, landedBlocks) {
+function areDirectionsAllowed({ blocks }, directions, landedBlocks) {
   let canMoveDown = directions[DOWN_KEYCODE];
   let canMoveRight = directions[RIGHT_KEYCODE];
   let canMoveLeft = directions[LEFT_KEYCODE];
 
   // Determine which direction piece can move in.
-  blocks.forEach(block => {
+  blocks.forEach((block) => {
     if (directions[DOWN_KEYCODE]) {
       canMoveDown &= isMoveValid(block.x + 1, block.y, landedBlocks);
     }
@@ -83,7 +83,7 @@ function areDirectionsAllowed({blocks}, directions, landedBlocks) {
   });
 
   // Prevents block overlap when piece moves diagonally.
-  blocks.forEach(block => {
+  blocks.forEach((block) => {
     if (canMoveDown && canMoveRight) {
       canMoveRight = isMoveValid(block.x + 1, block.y + 1, landedBlocks);
     }
@@ -99,14 +99,14 @@ function createNewPieceInDirection(
   currentPiece,
   pieceCanMoveDown,
   pieceCanMoveRight,
-  pieceCanMoveLeft,
+  pieceCanMoveLeft
 ) {
   let newPiece = {
     ...currentPiece,
     blocks: [],
   };
 
-  currentPiece.blocks.forEach(block => {
+  currentPiece.blocks.forEach((block) => {
     let newBlock = {
       ...block,
     };
@@ -127,15 +127,12 @@ function createNewPieceInDirection(
   return newPiece;
 }
 
-export function movePiece({currentPiece, blocks}, directions) {
-  let [
-    pieceCanMoveDown,
-    pieceCanMoveRight,
-    pieceCanMoveLeft,
-  ] = areDirectionsAllowed(currentPiece, directions, blocks);
+export function movePiece({ currentPiece, blocks }, directions) {
+  let [pieceCanMoveDown, pieceCanMoveRight, pieceCanMoveLeft] =
+    areDirectionsAllowed(currentPiece, directions, blocks);
 
   if (!pieceCanMoveDown && directions[DOWN_KEYCODE]) {
-    return [{blocks: []}, combineBlocks(currentPiece.blocks, blocks), true];
+    return [{ blocks: [] }, combineBlocks(currentPiece.blocks, blocks), true];
   }
 
   return [
@@ -143,7 +140,7 @@ export function movePiece({currentPiece, blocks}, directions) {
       currentPiece,
       pieceCanMoveDown,
       pieceCanMoveRight,
-      pieceCanMoveLeft,
+      pieceCanMoveLeft
     ),
     blocks,
     false,

@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import './countdownStyles.css';
-import {checkSettings} from '../../utils/database';
-import {playSound, playMusic} from '../../utils/playsound';
-import quirkySound from '../../sounds/quirky.mp3';
+import React, { Component } from "react";
+import "./countdownStyles.css";
+import { checkSettings } from "../../utils/database";
+import { playSound, playMusic } from "../../utils/playsound";
+import quirkySound from "../../sounds/quirky.mp3";
 
 class Countdown extends Component {
   constructor(props) {
@@ -19,11 +19,11 @@ class Countdown extends Component {
         {
           volumeOn: true,
         },
-        newFields => {
+        (newFields) => {
           if (newFields.volumeOn) {
             playSound(quirkySound, 500);
           }
-        },
+        }
       );
       this.setState({
         from: --this.state.from,
@@ -33,11 +33,11 @@ class Countdown extends Component {
           {
             musicOn: true,
           },
-          newFields => {
+          (newFields) => {
             if (newFields.musicOn) {
               playMusic();
             }
-          },
+          }
         );
         clearInterval(timerId);
         this.state.reset();

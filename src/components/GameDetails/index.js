@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import './gameDetailsStyles.css';
-import Block from '../BlockContainer/Block';
-import {gameDb, checkSettings, updateSettings} from '../../utils/database';
-import {playMusic, stopMusic} from '../../utils/playsound';
+import React, { Component } from "react";
+import "./gameDetailsStyles.css";
+import Block from "../BlockContainer/Block";
+import { gameDb, checkSettings, updateSettings } from "../../utils/database";
+import { playMusic, stopMusic } from "../../utils/playsound";
 
 class GameDetails extends Component {
   state = {
@@ -18,14 +18,14 @@ class GameDetails extends Component {
         volumeOn: true,
         musicOn: true,
       },
-      newFields => {
+      (newFields) => {
         /* if (newFields.musicOn) {
           playMusic();
         } else {
           stopMusic();
         } */
         this.setState(newFields);
-      },
+      }
     );
   }
 
@@ -33,40 +33,40 @@ class GameDetails extends Component {
     stopMusic();
   }
 
-  toggleVolumeButton = e => {
+  toggleVolumeButton = (e) => {
     updateSettings(
       {
         volumeOn: true,
       },
-      newFields => this.setState(newFields),
+      (newFields) => this.setState(newFields)
     );
   };
 
-  toggleMusicButton = e => {
+  toggleMusicButton = (e) => {
     updateSettings(
       {
         musicOn: true,
       },
-      newFields => {
+      (newFields) => {
         if (newFields.musicOn) {
           playMusic();
         } else {
           stopMusic();
         }
         this.setState(newFields);
-      },
+      }
     );
   };
 
   render() {
-    const {score, level, piece, gameover, showExitMenu} = this.props;
+    const { score, level, piece, gameover, showExitMenu } = this.props;
 
     let nextPieceDom = <div className="next-piece" />;
-    const {blocks} = piece;
+    const { blocks } = piece;
 
     if (blocks.length > 0) {
       let closestY = blocks[0].y;
-      blocks.forEach(block => {
+      blocks.forEach((block) => {
         closestY = block.y < closestY ? block.y : closestY;
       });
 
@@ -81,7 +81,7 @@ class GameDetails extends Component {
             report={() => {}}
             key={index}
             style={{
-              position: 'relative',
+              position: "relative",
             }}
           />
         );
@@ -102,12 +102,13 @@ class GameDetails extends Component {
         <i
           className="fa fa-music music-icon fa-2x"
           aria-hidden="true"
-          onClick={this.toggleMusicButton}>
+          onClick={this.toggleMusicButton}
+        >
           {this.state.musicOn ? null : <div className="music-icon-slash" />}
         </i>
         <i
           className={`fas ${
-            this.state.volumeOn ? 'fa-volume-up' : 'fa-volume-mute'
+            this.state.volumeOn ? "fa-volume-up" : "fa-volume-mute"
           } fa-2x volume-icon`}
           onClick={this.toggleVolumeButton}
         />

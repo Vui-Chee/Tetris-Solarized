@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {gameDb} from '../../utils/database';
-import {Link} from 'react-router-dom';
-import './hiscoresStyles.css';
+import React, { Component } from "react";
+import { gameDb } from "../../utils/database";
+import { Link } from "react-router-dom";
+import "./hiscoresStyles.css";
 
 class HiScores extends Component {
   state = {
@@ -24,7 +24,7 @@ class HiScores extends Component {
   }
 
   render() {
-    const {scores} = this.state;
+    const { scores } = this.state;
 
     let scoreRows = scores.map((score, index) => (
       <tr key={index}>
@@ -41,7 +41,7 @@ class HiScores extends Component {
             <td>---</td>
             <td>---</td>
             <td>---</td>
-          </tr>,
+          </tr>
         );
       }
     }

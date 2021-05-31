@@ -1,5 +1,5 @@
-import {checkSettings} from '../utils/database';
-import music from '../sounds/tetris_background.mp3';
+import { checkSettings } from "../utils/database";
+import music from "../sounds/tetris_background.mp3";
 
 let backgroundMusic = new Audio(music);
 
@@ -10,13 +10,13 @@ export function playSound(file, timeToPause) {
       volumeOn: true,
       volumeLevel: 1,
     },
-    newFields => {
+    (newFields) => {
       if (!newFields.volumeOn) return;
       let sound = new Audio(file);
       sound.volume = newFields.volumeLevel;
       sound.play();
       setTimeout(() => sound.pause(), timeToPause);
-    },
+    }
   );
 }
 
@@ -25,11 +25,11 @@ export function playMusic() {
     {
       musicLevel: 1,
     },
-    newFields => {
+    (newFields) => {
       backgroundMusic.loop = true;
       backgroundMusic.volume = newFields.musicLevel;
       backgroundMusic.play();
-    },
+    }
   );
 }
 

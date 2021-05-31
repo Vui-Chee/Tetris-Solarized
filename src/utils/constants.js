@@ -15,5 +15,5 @@ export const SPACE_KEYCODE = 32;
 
 export const P_KEYCODE = 80;
 
-export const SCORES_DB_FILENAME = 'tetris.scores.db';
-export const SETTINGS_DB_FILENAME = 'tetris.settings.db';
+export const SCORES_DB_FILENAME = "tetris.scores.db";
+export const SETTINGS_DB_FILENAME = "tetris.settings.db";

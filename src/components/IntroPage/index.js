@@ -1,25 +1,26 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
-import './introPageStyles.css';
-import clickSound from '../../sounds/click.mp3';
-import {checkSettings} from '../../utils/database';
-import {playSound} from '../../utils/playsound';
-import headerImage from '../../images/tetris-header.png';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import "./introPageStyles.css";
+import clickSound from "../../sounds/click.mp3";
+import { checkSettings } from "../../utils/database";
+import { playSound } from "../../utils/playsound";
+import headerImage from "../../images/tetris-header.png";
 
-const ListItemLink = ({to, name}) => (
+const ListItemLink = ({ to, name }) => (
   <li
     onMouseOver={() => {
       checkSettings(
         {
           volumeOn: true,
         },
-        newFields => {
+        (newFields) => {
           if (newFields.volumeOn) {
             playSound(clickSound, 100);
           }
-        },
+        }
       );
-    }}>
+    }}
+  >
     <Link to={to} className="intro-page-link">
       {name}
     </Link>

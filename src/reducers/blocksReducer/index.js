@@ -6,11 +6,11 @@ import {
   CLEAR_ROWS,
   RESET,
   SET_COMBINED,
-} from '../../actions/types';
+} from "../../actions/types";
 
-import {movePiece, instantLand} from './movement';
-import {rotatePiece, createPiece} from './pieces';
-import {clearFullRows} from './blocks';
+import { movePiece, instantLand } from "./movement";
+import { rotatePiece, createPiece } from "./pieces";
+import { clearFullRows } from "./blocks";
 
 const initialState = {
   currentPiece: {
@@ -23,7 +23,7 @@ const initialState = {
   isCombined: false,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case NEW_PIECE:
       const pieces = createPiece(state.currentPiece, state.nextPiece);
@@ -61,7 +61,7 @@ export default function(state = initialState, action) {
         blocks: clearFullRows(state.blocks, action.payload),
       };
     case RESET:
-      console.log('blocks reducer reset.');
+      console.log("blocks reducer reset.");
       return initialState;
     case SET_COMBINED:
       let [flag, _] = action.payload;

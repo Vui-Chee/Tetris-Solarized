@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import './instructionsStyles.css';
-import {Link} from 'react-router-dom';
+import React, { Component } from "react";
+import "./instructionsStyles.css";
+import { Link } from "react-router-dom";
 
-const InstructionBox = ({icon, text, customStyles}) => (
+const InstructionBox = ({ icon, text, customStyles }) => (
   <div className="instruction-box">
     <div className="key-box" style={customStyles}>
       {icon}
@@ -11,7 +11,7 @@ const InstructionBox = ({icon, text, customStyles}) => (
   </div>
 );
 
-const Instructions = props => (
+const Instructions = (props) => (
   <div className="instructions">
     <h1>Instructions</h1>
     <InstructionBox
@@ -34,7 +34,7 @@ const Instructions = props => (
     <InstructionBox
       icon={<p>space</p>}
       text="instant drop piece"
-      customStyles={{width: '100px'}}
+      customStyles={{ width: "100px" }}
     />
 
     <Link className="return-link" to="/">
