@@ -1,6 +1,6 @@
 {
   "name": "tetris-solarized",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Electron Tetris",
   "main": "./dist/main.prod.js",
   "scripts": {
