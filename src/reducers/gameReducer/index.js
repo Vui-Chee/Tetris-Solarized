@@ -1,5 +1,5 @@
-import {TOGGLE_PLAY, INCR_SCORE, LEVEL_UP, RESET} from '../../actions/types';
-import {NUM_COLS} from '../../utils/constants';
+import { TOGGLE_PLAY, INCR_SCORE, LEVEL_UP, RESET } from "../../actions/types";
+import { NUM_COLS } from "../../utils/constants";
 
 const standardMovementRate = 80;
 
@@ -11,7 +11,7 @@ const initialState = {
   level: 1,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case TOGGLE_PLAY:
       return {
@@ -41,7 +41,7 @@ export default function(state = initialState, action) {
         dropRate: newDropRate,
       };
     case RESET:
-      console.log('game reducer reset');
+      console.log("game reducer reset");
       return {
         ...initialState,
         isPlaying: true,

@@ -1,8 +1,8 @@
-import React from 'react';
-import './exitMenuStyles.css';
-import {withRouter} from 'react-router-dom';
+import React from "react";
+import "./exitMenuStyles.css";
+import { withRouter } from "react-router-dom";
 
-const ExitMenu = ({stay, reset, history}) => {
+const ExitMenu = ({ stay, reset, history }) => {
   return (
     <div className="exit-menu">
       <button
@@ -11,9 +11,10 @@ const ExitMenu = ({stay, reset, history}) => {
             reset();
             resolve();
           }).then(() => {
-            history.push('/');
+            history.push("/");
           });
-        }}>
+        }}
+      >
         Yes
       </button>
       <button onClick={() => stay()}>No</button>

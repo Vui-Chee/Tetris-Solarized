@@ -1,20 +1,20 @@
-import '@babel/polyfill';
-import React, {Component} from 'react';
-import './gameoverMenuStyles.css';
-import {withRouter} from 'react-router-dom';
+import "@babel/polyfill";
+import React, { Component } from "react";
+import "./gameoverMenuStyles.css";
+import { withRouter } from "react-router-dom";
 import {
   checkSettings,
   insertScore,
   withinHighScores,
-} from '../../utils/database';
-import {playSound, stopMusic} from '../../utils/playsound';
-import gameoverSound from '../../sounds/gameover.mp3';
+} from "../../utils/database";
+import { playSound, stopMusic } from "../../utils/playsound";
+import gameoverSound from "../../sounds/gameover.mp3";
 
 class GameoverMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      playerName: '',
+      playerName: "",
       userCanInputScore: false,
       fieldTooShort: false,
       fieldTooLong: false,
@@ -27,12 +27,12 @@ class GameoverMenu extends Component {
       {
         volumeOn: true,
       },
-      newFields => {
+      (newFields) => {
         if (newFields.volumeOn) {
           playSound(gameoverSound, 4000);
         }
         stopMusic();
-      },
+      }
     );
 
     withinHighScores(this.props.score, (docs, score, numHiScores) => {
@@ -42,7 +42,7 @@ class GameoverMenu extends Component {
     });
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
       nameAlreadyExists: false,
       playerName: e.target.value,
@@ -51,9 +51,9 @@ class GameoverMenu extends Component {
     });
   };
 
-  handleExit = async e => {
-    const {level, score, reset, history} = this.props;
-    const {userCanInputScore, playerName} = this.state;
+  handleExit = async (e) => {
+    const { level, score, reset, history } = this.props;
+    const { userCanInputScore, playerName } = this.state;
 
     if (
       userCanInputScore &&
@@ -68,7 +68,7 @@ class GameoverMenu extends Component {
 
     if (userCanInputScore) {
       let [err, _] = await insertScore(playerName, level, score);
-      this.setState({nameAlreadyExists: err ? true : false});
+      this.setState({ nameAlreadyExists: err ? true : false });
       if (err) return;
     }
 
@@ -77,11 +77,11 @@ class GameoverMenu extends Component {
       resolve();
     });
 
-    history.push('/');
+    history.push("/");
   };
 
   render() {
-    const {level, score, restart} = this.props;
+    const { level, score, restart } = this.props;
     const {
       userCanInputScore,
       fieldTooShort,
@@ -99,10 +99,10 @@ class GameoverMenu extends Component {
             {fieldTooShort || fieldTooLong || nameAlreadyExists ? (
               <label id="gameover-warning">
                 {nameAlreadyExists
-                  ? 'Name already taken, try another.'
+                  ? "Name already taken, try another."
                   : fieldTooShort
-                  ? 'Name must be at least 6 characters long.'
-                  : 'Name must be at most 15 characters long.'}
+                  ? "Name must be at least 6 characters long."
+                  : "Name must be at most 15 characters long."}
               </label>
             ) : (
               <label>High score! Score will be saved when you exit.</label>

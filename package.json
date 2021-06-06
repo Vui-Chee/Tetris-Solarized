@@ -9,7 +9,8 @@
     "build-renderer": "cross-env NODE_ENV=production webpack --config ./webpack.config.renderer.prod.babel.js --colors",
     "build-main": "cross-env NODE_ENV=production webpack --config ./webpack.config.main.prod.babel.js --colors",
     "build-all": "npm run build-renderer && npm run build-main",
-    "package-mac": "npm run build-all && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/images/icons/mac/tetris-logo.icns --prune=true --out=release-builds"
+    "package-mac": "npm run build-all && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/images/icons/mac/tetris-logo.icns --prune=true --out=release-builds",
+    "format": "prettier -w src/**/*.js"
   },
   "author": "Vui Chee",
   "license": "MIT",
@@ -43,6 +44,7 @@
     "html-webpack-plugin": "3.2.0",
     "mini-css-extract-plugin": "0.5.0",
     "optimize-css-assets-webpack-plugin": "5.0.1",
+    "prettier": "^2.3.0",
     "style-loader": "0.23.1",
     "terser-webpack-plugin": "1.2.2",
     "uglifyjs-webpack-plugin": "2.1.2",

@@ -1,16 +1,16 @@
-import {isMoveValid} from './movement';
+import { isMoveValid } from "./movement";
 
 const CORNER_BLOCK = 0;
 const EDGE_BLOCK = 1;
 const CENTER_BLOCK = 2;
 
-const TYPE_L_PIECE_1 = 'TYPE_L_PIECE_1';
-const TYPE_L_PIECE_2 = 'TYPE_L_PIECE_2';
-const TYPE_Z_PIECE_1 = 'TYPE_Z_PIECE_1';
-const TYPE_Z_PIECE_2 = 'TYPE_Z_PIECE_2';
-const TYPE_T_PIECE = 'TYPE_T_PIECE';
-const TYPE_S_PIECE = 'TYPE_S_PIECE';
-const TYPE_B_PIECE = 'TYPE_B_PIECE';
+const TYPE_L_PIECE_1 = "TYPE_L_PIECE_1";
+const TYPE_L_PIECE_2 = "TYPE_L_PIECE_2";
+const TYPE_Z_PIECE_1 = "TYPE_Z_PIECE_1";
+const TYPE_Z_PIECE_2 = "TYPE_Z_PIECE_2";
+const TYPE_T_PIECE = "TYPE_T_PIECE";
+const TYPE_S_PIECE = "TYPE_S_PIECE";
+const TYPE_B_PIECE = "TYPE_B_PIECE";
 
 const PIECE_TYPES = [
   TYPE_L_PIECE_1,
@@ -262,13 +262,13 @@ export const B_PIECE = {
 
 function isType2(type) {
   const typesWith2Orientations = [TYPE_Z_PIECE_1, TYPE_Z_PIECE_2, TYPE_S_PIECE];
-  return typesWith2Orientations.filter(t => t === type).length > 0;
+  return typesWith2Orientations.filter((t) => t === type).length > 0;
 }
 
 function edgeBlockMap(edgeBlock, centerBlock) {
   let radius = Math.max(
     Math.abs(edgeBlock.x - centerBlock.x),
-    Math.abs(edgeBlock.y - centerBlock.y),
+    Math.abs(edgeBlock.y - centerBlock.y)
   );
   if (edgeBlock.x < centerBlock.x) {
     // Above center block
@@ -399,7 +399,7 @@ function createRandomPiece() {
 export function createPiece(currentPiece, nextPiece) {
   if (currentPiece.blocks.length === 0 && nextPiece.blocks.length === 0) {
     // Create 2 pieces when starting game for the first time.
-    console.log('create 2 pieces');
+    console.log("create 2 pieces");
     return {
       currentPiece: createRandomPiece(),
       nextPiece: createRandomPiece(),

@@ -1,8 +1,8 @@
-import Datastore from 'nedb';
-import path from 'path';
-import {remote} from 'electron';
-import {SCORES_DB_FILENAME, SETTINGS_DB_FILENAME} from '../utils/constants';
-import {promiseWrapper} from './promise';
+import Datastore from "nedb";
+import path from "path";
+import { remote } from "electron";
+import { SCORES_DB_FILENAME, SETTINGS_DB_FILENAME } from "../utils/constants";
+import { promiseWrapper } from "./promise";
 
 const NUM_HIGH_SCORES = 10;
 
@@ -13,11 +13,11 @@ let initialSettings = {
   musicLevel: 0.2,
 };
 
-const dbFactory = filename => {
+const dbFactory = (filename) => {
   let pathToFile =
-    process.env.NODE_ENV === 'development'
-      ? path.resolve('.', 'data', filename)
-      : path.resolve(remote.app.getPath('exe'), 'data', filename);
+    process.env.NODE_ENV === "development"
+      ? path.resolve(".", "data", filename)
+      : path.resolve(remote.app.getPath("exe"), "data", filename);
 
   return new Datastore({
     filename: pathToFile,
@@ -35,11 +35,11 @@ const dbFactory = filename => {
 //      ...
 //   }
 // }
-const constraintDecorator = createDb => {
-  return function(fieldConstraints, filename) {
+const constraintDecorator = (createDb) => {
+  return function (fieldConstraints, filename) {
     let db = createDb(filename);
     Object.entries(fieldConstraints).forEach(([field, constraints]) => {
-      db.ensureIndex({fieldName: field, ...constraints}, err => {
+      db.ensureIndex({ fieldName: field, ...constraints }, (err) => {
         if (err) console.log(err);
       });
     });
@@ -55,7 +55,7 @@ export const gameDb = {
         unique: true,
       },
     },
-    SCORES_DB_FILENAME,
+    SCORES_DB_FILENAME
   ),
   settings: dbFactory(SETTINGS_DB_FILENAME),
 };
@@ -63,8 +63,8 @@ export const gameDb = {
 const execSettings = (fields, callback1, callback2) => {
   let findOptions = {};
   // Check for field(s)
-  Object.keys(field => {
-    findOptions[field] = {$exists: true};
+  Object.keys((field) => {
+    findOptions[field] = { $exists: true };
   });
 
   gameDb.settings.find(findOptions, (err, docs) => {
@@ -73,9 +73,9 @@ const execSettings = (fields, callback1, callback2) => {
     if (err || docs.length <= 0) {
       // Copy initial values of interested fields.
       Object.keys(fields).forEach(
-        field => (newFields[field] = initialSettings[field]),
+        (field) => (newFields[field] = initialSettings[field])
       );
-      let insertOptions = {...initialSettings};
+      let insertOptions = { ...initialSettings };
       gameDb.settings.insert(insertOptions);
     } else {
       // console.log(docs[0]);
@@ -96,9 +96,9 @@ export const checkSettings = (fields, callback) => {
     fields,
     (fields, newFields, doc) => {
       // Copy existing fields in database.
-      Object.keys(fields).forEach(field => (newFields[field] = doc[field]));
+      Object.keys(fields).forEach((field) => (newFields[field] = doc[field]));
     },
-    callback,
+    callback
   );
 };
 
@@ -107,10 +107,10 @@ export const updateSettings = (fields, callback) => {
     fields,
     (fields, newFields, doc) => {
       // Update desired fields with new values.
-      let toOptions = {...doc};
+      let toOptions = { ...doc };
       // NOTE newFields is a subset of toOptions
-      Object.keys(fields).forEach(field => {
-        if (typeof doc[field] === 'boolean') {
+      Object.keys(fields).forEach((field) => {
+        if (typeof doc[field] === "boolean") {
           toOptions[field] = !doc[field];
           newFields[field] = !doc[field];
         } else {
@@ -122,23 +122,23 @@ export const updateSettings = (fields, callback) => {
       // Update old fields to new fields
       gameDb.settings.update(doc, toOptions);
     },
-    callback,
+    callback
   );
 };
 
 export const insertScore = (playerName, level, score) => {
   let insertPromise = new Promise((resolve, reject) => {
     gameDb.scores.insert(
-      {name: playerName, level: level, score: score, timeStamp: Date.now()},
+      { name: playerName, level: level, score: score, timeStamp: Date.now() },
       (err, newDoc) => {
         if (err) {
           console.log(err);
           reject(err);
         } else {
-          console.log('New score inserted: ', newDoc);
+          console.log("New score inserted: ", newDoc);
           resolve(newDoc);
         }
-      },
+      }
     );
   });
 
@@ -157,7 +157,7 @@ export const withinHighScores = (score, callback) => {
     });
 
     if (docs.length >= NUM_HIGH_SCORES && score > docs[0].score) {
-      gameDb.scores.remove({_id: docs[0]._id});
+      gameDb.scores.remove({ _id: docs[0]._id });
     }
 
     callback(docs, score, NUM_HIGH_SCORES);

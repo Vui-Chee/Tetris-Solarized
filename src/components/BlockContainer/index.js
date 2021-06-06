@@ -1,10 +1,10 @@
-import React from 'react';
-import {BLOCK_DIM} from '../../utils/constants';
-import './blockContainerStyles.css';
-import Block from './Block';
-import shortid from 'shortid';
+import React from "react";
+import { BLOCK_DIM } from "../../utils/constants";
+import "./blockContainerStyles.css";
+import Block from "./Block";
+import shortid from "shortid";
 
-const BlockContainer = ({currentPiece, blocks, fullRowIndices}) => {
+const BlockContainer = ({ currentPiece, blocks, fullRowIndices }) => {
   // Blocks which are still moving
   let newBlocks = [];
   newBlocks = currentPiece.blocks.map((blockObj, index) => {
@@ -20,8 +20,8 @@ const BlockContainer = ({currentPiece, blocks, fullRowIndices}) => {
   });
 
   // Render blocks that have landed.
-  Object.keys(blocks).forEach(rowIndex => {
-    Object.keys(blocks[rowIndex]).forEach(colIndex => {
+  Object.keys(blocks).forEach((rowIndex) => {
+    Object.keys(blocks[rowIndex]).forEach((colIndex) => {
       // NOTE : keys of objects are treated as strings.
       newBlocks.push(
         <Block
@@ -31,7 +31,7 @@ const BlockContainer = ({currentPiece, blocks, fullRowIndices}) => {
           key={shortid.generate()}
           fullRowFlag={fullRowIndices[rowIndex]}
           dim={BLOCK_DIM}
-        />,
+        />
       );
     });
   });

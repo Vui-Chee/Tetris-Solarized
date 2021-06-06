@@ -1,36 +1,36 @@
-import '@babel/polyfill';
-import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import './gameStyles.css';
-import BlockContainer from '../BlockContainer';
-import GameDetails from '../GameDetails';
-import Countdown from '../Countdown';
-import MessagePopup from '../MessagePopup';
-import GameoverMenu from '../GameoverMenu';
-import ExitMenu from '../ExitMenu';
+import "@babel/polyfill";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import "./gameStyles.css";
+import BlockContainer from "../BlockContainer";
+import GameDetails from "../GameDetails";
+import Countdown from "../Countdown";
+import MessagePopup from "../MessagePopup";
+import GameoverMenu from "../GameoverMenu";
+import ExitMenu from "../ExitMenu";
 
-import {clearRows, setIsCombined} from '../../actions/blockActions';
+import { clearRows, setIsCombined } from "../../actions/blockActions";
 
 import {
   togglePlayMode,
   increaseScore,
   resetGame,
   levelUp,
-} from '../../actions/gameActions';
+} from "../../actions/gameActions";
 
 import {
   genNewPiece,
   move,
   rotate,
   instantMove,
-} from '../../actions/pieceActions';
+} from "../../actions/pieceActions";
 
 import {
   isRowFull,
   getFullRows,
   isBlockOvershot,
-} from '../../reducers/blocksReducer/blocks';
+} from "../../reducers/blocksReducer/blocks";
 
 import {
   LEFT_KEYCODE,
@@ -40,7 +40,7 @@ import {
   SPACE_KEYCODE,
   P_KEYCODE,
   NUM_COLS,
-} from '../../utils/constants';
+} from "../../utils/constants";
 
 var keyPresses = {};
 var timeStamps = {
@@ -62,7 +62,7 @@ class Game extends Component {
 
   componentDidMount() {
     this.attachListeners();
-    const {genNewPiece, isPlaying, togglePlayMode} = this.props;
+    const { genNewPiece, isPlaying, togglePlayMode } = this.props;
     // begin the game immediately
     genNewPiece();
     if (!isPlaying) {
@@ -76,9 +76,9 @@ class Game extends Component {
   }
 
   async componentWillReceiveProps(nextProps) {
-    const {isPlaying, isCombined, blocks, togglePlayMode} = nextProps;
-    const {hasCompletedCountdown, fullRowIndices} = this.state;
-    const {score, levelUp} = this.props;
+    const { isPlaying, isCombined, blocks, togglePlayMode } = nextProps;
+    const { hasCompletedCountdown, fullRowIndices } = this.state;
+    const { score, levelUp } = this.props;
 
     if (isBlockOvershot(blocks)) {
       this.detachListeners();
@@ -111,7 +111,7 @@ class Game extends Component {
 
   clearFullRows = (
     fullRowIndices,
-    {blocks, genNewPiece, clearRows, increaseScore, setIsCombined},
+    { blocks, genNewPiece, clearRows, increaseScore, setIsCombined }
   ) => {
     let rows = getFullRows(blocks);
 
@@ -140,7 +140,7 @@ class Game extends Component {
   };
 
   updateTimeStamp = (whichTimeStamp, timestamp, intervalDuration, action) => {
-    const {currentPiece} = this.props;
+    const { currentPiece } = this.props;
 
     if (currentPiece.blocks.length <= 0) return;
 
@@ -158,8 +158,8 @@ class Game extends Component {
   hasGameStarted = () =>
     this.props.isPlaying && this.state.hasCompletedCountdown;
 
-  loop = timestamp => {
-    const {movementRate, dropRate, move} = this.props;
+  loop = (timestamp) => {
+    const { movementRate, dropRate, move } = this.props;
     // const {hasCompletedCountdown} = this.state;
 
     if (this.hasGameStarted()) {
@@ -167,18 +167,18 @@ class Game extends Component {
       // Fire action only when keys are pressed.
       if (Object.keys(keyPresses).length > 0) {
         this.updateTimeStamp(
-          'movementTimeStamp',
+          "movementTimeStamp",
           timestamp,
           movementRate,
           () => {
             move(keyPresses);
-          },
+          }
         );
       }
 
       // Already pressing down, do not double move.
       if (!keyPresses[DOWN_KEYCODE]) {
-        this.updateTimeStamp('dropRateTimeStamp', timestamp, dropRate, () => {
+        this.updateTimeStamp("dropRateTimeStamp", timestamp, dropRate, () => {
           move({
             40: true,
           });
@@ -188,14 +188,14 @@ class Game extends Component {
     window.requestAnimationFrame(this.loop);
   };
 
-  dropPiece = e => {
+  dropPiece = (e) => {
     if (this.hasGameStarted() && e.keyCode === SPACE_KEYCODE) {
-      if (!this.props.isSpaceKeyDown && e.type === 'keydown') {
+      if (!this.props.isSpaceKeyDown && e.type === "keydown") {
         this.props.instantMove();
         this.setState({
           isSpaceKeyDown: true,
         });
-      } else if (e.type === 'keyup') {
+      } else if (e.type === "keyup") {
         this.setState({
           isSpaceKeyDown: false,
         });
@@ -203,27 +203,27 @@ class Game extends Component {
     }
   };
 
-  rotatePiece = e => {
+  rotatePiece = (e) => {
     if (this.hasGameStarted() && e.keyCode === UP_KEYCODE) {
       this.props.rotate();
     }
   };
 
-  updateKeysPressed = e => {
+  updateKeysPressed = (e) => {
     if (!this.props.isPlaying || this.props.isCombined) return;
-    if (e.type === 'keydown') {
+    if (e.type === "keydown") {
       keyPresses[e.keyCode] = true;
-    } else if (e.type === 'keyup') {
+    } else if (e.type === "keyup") {
       keyPresses = {};
     }
   };
 
-  pauseGame = e => {
+  pauseGame = (e) => {
     if (this.state.gameover) return;
     if (
       e.keyCode === P_KEYCODE &&
       (!this.props.isPlaying || this.hasGameStarted()) &&
-      e.type === 'keydown'
+      e.type === "keydown"
     ) {
       this.props.togglePlayMode();
     }
@@ -237,15 +237,15 @@ class Game extends Component {
       this.setState(createGameState());
       resolve();
     });
-    const {resetGame, genNewPiece} = this.props;
+    const { resetGame, genNewPiece } = this.props;
     // Resets redux level game state.
     resetGame();
     genNewPiece();
   };
 
   displayExitMenu = async () => {
-    const {isPlaying, togglePlayMode} = this.props;
-    const {hasCompletedCountdown} = this.state;
+    const { isPlaying, togglePlayMode } = this.props;
+    const { hasCompletedCountdown } = this.state;
     // Do not allow player to quit when counting down.
     if (isPlaying && !hasCompletedCountdown) return;
     // Pause the game when the exit menu displays.
@@ -255,7 +255,7 @@ class Game extends Component {
       }
       resolve();
     });
-    this.setState({showExitMenu: true});
+    this.setState({ showExitMenu: true });
   };
 
   handleStayInGameState = async () => {
@@ -264,27 +264,27 @@ class Game extends Component {
       if (!this.props.isPlaying) this.props.togglePlayMode();
       resolve();
     });
-    this.setState({hasCompletedCountdown: false, showExitMenu: false});
+    this.setState({ hasCompletedCountdown: false, showExitMenu: false });
   };
 
   attachListeners = () => {
-    window.addEventListener('keydown', this.pauseGame, false);
-    window.addEventListener('keyup', this.pauseGame, false);
-    window.addEventListener('keydown', this.updateKeysPressed, false);
-    window.addEventListener('keyup', this.updateKeysPressed, false);
-    window.addEventListener('keydown', this.rotatePiece, false);
-    window.addEventListener('keydown', this.dropPiece, false);
-    window.addEventListener('keyup', this.dropPiece, false);
+    window.addEventListener("keydown", this.pauseGame, false);
+    window.addEventListener("keyup", this.pauseGame, false);
+    window.addEventListener("keydown", this.updateKeysPressed, false);
+    window.addEventListener("keyup", this.updateKeysPressed, false);
+    window.addEventListener("keydown", this.rotatePiece, false);
+    window.addEventListener("keydown", this.dropPiece, false);
+    window.addEventListener("keyup", this.dropPiece, false);
   };
 
   detachListeners = () => {
-    window.removeEventListener('keydown', this.pauseGame);
-    window.removeEventListener('keyup', this.pauseGame);
-    window.removeEventListener('keydown', this.updateKeysPressed);
-    window.removeEventListener('keyup', this.updateKeysPressed);
-    window.removeEventListener('keydown', this.rotatePiece);
-    window.removeEventListener('keydown', this.dropPiece);
-    window.removeEventListener('keyup', this.dropPiece);
+    window.removeEventListener("keydown", this.pauseGame);
+    window.removeEventListener("keyup", this.pauseGame);
+    window.removeEventListener("keydown", this.updateKeysPressed);
+    window.removeEventListener("keyup", this.updateKeysPressed);
+    window.removeEventListener("keydown", this.rotatePiece);
+    window.removeEventListener("keydown", this.dropPiece);
+    window.removeEventListener("keyup", this.dropPiece);
   };
 
   render() {
@@ -298,12 +298,8 @@ class Game extends Component {
       resetGame,
     } = this.props;
 
-    const {
-      fullRowIndices,
-      gameover,
-      hasCompletedCountdown,
-      showExitMenu,
-    } = this.state;
+    const { fullRowIndices, gameover, hasCompletedCountdown, showExitMenu } =
+      this.state;
 
     return (
       <div className="game">
@@ -331,7 +327,7 @@ class Game extends Component {
                 reset={resetGame}
               />
             }
-            customStyles={{fontSize: '1.2rem', marginTop: '-200px'}}
+            customStyles={{ fontSize: "1.2rem", marginTop: "-200px" }}
           />
         ) : showExitMenu ? (
           <MessagePopup
@@ -340,22 +336,22 @@ class Game extends Component {
               <ExitMenu stay={this.handleStayInGameState} reset={resetGame} />
             }
             customStyles={{
-              height: '200px',
-              marginTop: '-110px',
+              height: "200px",
+              marginTop: "-110px",
             }}
           />
         ) : hasCompletedCountdown ? null : isPlaying ? (
           <Countdown
-            reset={() => this.setState({hasCompletedCountdown: true})}
+            reset={() => this.setState({ hasCompletedCountdown: true })}
           />
         ) : (
           <MessagePopup
             message="Game Paused"
             customStyles={{
-              fontSize: '1.2rem',
-              height: '150px',
-              paddingTop: '50px',
-              marginTop: '-100px',
+              fontSize: "1.2rem",
+              height: "150px",
+              paddingTop: "50px",
+              marginTop: "-100px",
             }}
           />
         )}
@@ -388,7 +384,7 @@ Game.propTypes = {
   setIsCombined: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isPlaying: state.gameState.isPlaying,
   movementRate: state.gameState.movementRate,
   dropRate: state.gameState.dropRate,
@@ -400,18 +396,15 @@ const mapStateToProps = state => ({
   isCombined: state.blocksState.isCombined,
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    togglePlayMode,
-    genNewPiece,
-    move,
-    rotate,
-    instantMove,
-    clearRows,
-    increaseScore,
-    resetGame,
-    levelUp,
-    setIsCombined,
-  },
-)(Game);
+export default connect(mapStateToProps, {
+  togglePlayMode,
+  genNewPiece,
+  move,
+  rotate,
+  instantMove,
+  clearRows,
+  increaseScore,
+  resetGame,
+  levelUp,
+  setIsCombined,
+})(Game);
