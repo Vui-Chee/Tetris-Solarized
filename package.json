@@ -9,7 +9,8 @@
     "build-renderer": "cross-env NODE_ENV=production webpack --config ./webpack.config.renderer.prod.babel.js --colors",
     "build-main": "cross-env NODE_ENV=production webpack --config ./webpack.config.main.prod.babel.js --colors",
     "build-all": "npm run build-renderer && npm run build-main",
-    "package-mac": "npm run build-all && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/images/icons/mac/tetris-logo.icns --prune=true --out=release-builds"
+    "package-mac": "npm run build-all && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/images/icons/mac/tetris-logo.icns --prune=true --out=release-builds",
+    "format": "prettier -w src/**/*.js"
   },
   "author": "Vui Chee",
   "license": "MIT",
