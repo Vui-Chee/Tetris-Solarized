@@ -1,6 +1,5 @@
 import webpack from "webpack";
 import { spawn } from "child_process";
-import path from "path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
 
@@ -12,8 +11,6 @@ module.exports = {
   mode: "development",
 
   output: {
-    // path: path.join(__dirname, '/dist'),
-    // filename: 'index_bundle.js',
     publicPath: `http://localhost:${port}/dist`,
     filename: "index_bundle.js",
   },
@@ -106,14 +103,13 @@ module.exports = {
     hot: true,
     before() {
       if (process.env.START_HOT) {
-        console.log("Starting Main Process...");
         spawn("npm", ["run", "start-main-dev"], {
           shell: true,
           env: process.env,
           stdio: "inherit",
         })
           .on("close", (code) => process.exit(code))
-          .on("error", (spawnError) => console.error(spawnError));
+          .on("error", (spawnError) => process.exit(spawnError.code));
       }
     },
   },
