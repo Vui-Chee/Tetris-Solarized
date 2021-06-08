@@ -7,8 +7,6 @@ import {
   RIGHT_KEYCODE,
 } from "../../utils/constants";
 
-import { MOVE_DOWN, MOVE_LEFT, MOVE_RIGHT } from "../../actions/types";
-
 import { combineBlocks } from "./blocks";
 
 export function isOutOfBounds(x, y) {
@@ -24,7 +22,9 @@ export function isMoveValid(x, y, blocks) {
     if (isOutOfBounds(x, y) || blocks[x][y] !== undefined) {
       return false;
     }
-  } catch (error) {}
+  } catch (error) {
+    // pass
+  }
   return true;
 }
 

@@ -399,7 +399,6 @@ function createRandomPiece() {
 export function createPiece(currentPiece, nextPiece) {
   if (currentPiece.blocks.length === 0 && nextPiece.blocks.length === 0) {
     // Create 2 pieces when starting game for the first time.
-    console.log("create 2 pieces");
     return {
       currentPiece: createRandomPiece(),
       nextPiece: createRandomPiece(),
