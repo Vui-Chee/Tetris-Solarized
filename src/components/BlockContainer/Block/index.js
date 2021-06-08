@@ -1,9 +1,11 @@
+import PropTypes from "prop-types";
 import React from "react";
+
 import { isOutOfBounds } from "../../../reducers/blocksReducer/movement";
 import DisappearingBlock from "./DisappearingBlock";
 
 class Block extends React.Component {
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     if (
       nextProps.x === this.props.x &&
       nextProps.y === this.props.y &&
@@ -52,5 +54,17 @@ class Block extends React.Component {
     return blockDom;
   }
 }
+
+Block.propTypes = {
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
+  color: PropTypes.number.isRequired,
+  dim: PropTypes.number.isRequired,
+  fullRowFlag: PropTypes.bool.isRequired,
+};
+
+Block.defaultProps = {
+  fullRowFlag: false,
+};
 
 export default Block;

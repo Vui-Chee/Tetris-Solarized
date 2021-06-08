@@ -1,8 +1,11 @@
-import React from "react";
-import { BLOCK_DIM } from "../../utils/constants";
 import "./blockContainerStyles.css";
-import Block from "./Block";
+
+import PropTypes from "prop-types";
+import React from "react";
 import shortid from "shortid";
+
+import { BLOCK_DIM } from "../../utils/constants";
+import Block from "./Block";
 
 const BlockContainer = ({ currentPiece, blocks, fullRowIndices }) => {
   // Blocks which are still moving
@@ -37,6 +40,12 @@ const BlockContainer = ({ currentPiece, blocks, fullRowIndices }) => {
   });
 
   return <div className="block-container">{newBlocks}</div>;
+};
+
+BlockContainer.propTypes = {
+  currentPiece: PropTypes.object.isRequired,
+  fullRowIndices: PropTypes.object.isRequired,
+  blocks: PropTypes.object.isRequired,
 };
 
 export default BlockContainer;

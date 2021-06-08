@@ -1,8 +1,11 @@
-import React, { Component } from "react";
 import "./countdownStyles.css";
+
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+
+import quirkySound from "../../sounds/quirky.mp3";
 import { checkSettings } from "../../utils/database";
 import { playSound, playMusic } from "../../utils/playsound";
-import quirkySound from "../../sounds/quirky.mp3";
 
 class Countdown extends Component {
   constructor(props) {
@@ -26,7 +29,7 @@ class Countdown extends Component {
         }
       );
       this.setState({
-        from: --this.state.from,
+        from: this.state.from - 1,
       });
       if (this.state.from <= 0) {
         checkSettings(
@@ -49,5 +52,9 @@ class Countdown extends Component {
     return <div className="countdown">{this.state.from}</div>;
   }
 }
+
+Countdown.propTypes = {
+  reset: PropTypes.func.isRequired,
+};
 
 export default Countdown;

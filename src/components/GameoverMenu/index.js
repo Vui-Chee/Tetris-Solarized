@@ -1,14 +1,16 @@
-import "@babel/polyfill";
-import React, { Component } from "react";
 import "./gameoverMenuStyles.css";
+
+import PropTypes from "prop-types";
+import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+
+import gameoverSound from "../../sounds/gameover.mp3";
 import {
   checkSettings,
   insertScore,
   withinHighScores,
 } from "../../utils/database";
 import { playSound, stopMusic } from "../../utils/playsound";
-import gameoverSound from "../../sounds/gameover.mp3";
 
 class GameoverMenu extends Component {
   constructor(props) {
@@ -51,7 +53,7 @@ class GameoverMenu extends Component {
     });
   };
 
-  handleExit = async (e) => {
+  handleExit = async () => {
     const { level, score, reset, history } = this.props;
     const { userCanInputScore, playerName } = this.state;
 
@@ -67,12 +69,12 @@ class GameoverMenu extends Component {
     }
 
     if (userCanInputScore) {
-      let [err, _] = await insertScore(playerName, level, score);
+      let [err] = await insertScore(playerName, level, score);
       this.setState({ nameAlreadyExists: err ? true : false });
       if (err) return;
     }
 
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       reset(); // Resets redux state.
       resolve();
     });
@@ -120,5 +122,13 @@ class GameoverMenu extends Component {
     );
   }
 }
+
+GameoverMenu.propTypes = {
+  level: PropTypes.number.isRequired,
+  score: PropTypes.number.isRequired,
+  reset: PropTypes.func.isRequired,
+  restart: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+};
 
 export default withRouter(GameoverMenu);

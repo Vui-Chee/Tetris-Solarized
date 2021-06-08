@@ -1,5 +1,7 @@
-import React, { Component } from "react";
 import "./instructionsStyles.css";
+
+import PropTypes from "prop-types";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const InstructionBox = ({ icon, text, customStyles }) => (
@@ -11,7 +13,13 @@ const InstructionBox = ({ icon, text, customStyles }) => (
   </div>
 );
 
-const Instructions = (props) => (
+InstructionBox.propTypes = {
+  icon: PropTypes.element.isRequired,
+  text: PropTypes.string.isRequired,
+  customStyles: PropTypes.object,
+};
+
+const Instructions = () => (
   <div className="instructions">
     <h1>Instructions</h1>
     <InstructionBox
