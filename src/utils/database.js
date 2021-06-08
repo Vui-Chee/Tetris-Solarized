@@ -40,7 +40,9 @@ const constraintDecorator = (createDb) => {
     let db = createDb(filename);
     Object.entries(fieldConstraints).forEach(([field, constraints]) => {
       db.ensureIndex({ fieldName: field, ...constraints }, (err) => {
-        if (err) console.log(err);
+        if (err) {
+          throw err;
+        }
       });
     });
     return db;
@@ -132,10 +134,8 @@ export const insertScore = (playerName, level, score) => {
       { name: playerName, level: level, score: score, timeStamp: Date.now() },
       (err, newDoc) => {
         if (err) {
-          console.log(err);
           reject(err);
         } else {
-          console.log("New score inserted: ", newDoc);
           resolve(newDoc);
         }
       }
@@ -146,7 +146,7 @@ export const insertScore = (playerName, level, score) => {
 };
 
 export const withinHighScores = (score, callback) => {
-  gameDb.scores.find({}, (err, docs) => {
+  gameDb.scores.find({}, (_err, docs) => {
     docs.sort((a, b) => {
       if (a.score === b.score) {
         // Scores are equal, reverse sort by timeStamp instead.
