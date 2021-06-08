@@ -1,8 +1,6 @@
 // async requires polyfill
 import "@babel/polyfill";
-import { app, BrowserWindow, globalShortcut } from "electron";
-import path from "path";
-import url from "url";
+import { app, BrowserWindow } from "electron";
 
 const installExtensions = async () => {
   const installer = require("electron-devtools-installer");
@@ -11,7 +9,7 @@ const installExtensions = async () => {
 
   return Promise.all(
     extensions.map((name) => installer.default(installer[name], forceDownload))
-  ).catch(console.log);
+  );
 };
 
 // Keep a global reference of the window object, if you don't, the window will

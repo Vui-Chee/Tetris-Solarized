@@ -18,7 +18,7 @@ export default function (state = initialState, action) {
         ...state,
         isPlaying: !state.isPlaying,
       };
-    case INCR_SCORE:
+    case INCR_SCORE: {
       let numRowsRemoved = Object.keys(action.payload).length;
       let numBlocksRemoved = numRowsRemoved * NUM_COLS;
       let scoreToAdd = numBlocksRemoved * 10;
@@ -26,7 +26,8 @@ export default function (state = initialState, action) {
         ...state,
         score: state.score + scoreToAdd,
       };
-    case LEVEL_UP:
+    }
+    case LEVEL_UP: {
       let newLevel =
         action.payload - state.level * 1000 >= 0
           ? Math.min(state.level + 1, 10)
@@ -40,12 +41,13 @@ export default function (state = initialState, action) {
         level: newLevel,
         dropRate: newDropRate,
       };
-    case RESET:
-      console.log("game reducer reset");
+    }
+    case RESET: {
       return {
         ...initialState,
         isPlaying: true,
       };
+    }
     default:
       return state;
   }

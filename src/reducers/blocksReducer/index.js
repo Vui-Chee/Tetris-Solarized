@@ -25,7 +25,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case NEW_PIECE:
+    case NEW_PIECE: {
       const pieces = createPiece(state.currentPiece, state.nextPiece);
       return {
         ...state,
@@ -33,12 +33,14 @@ export default function (state = initialState, action) {
         currentPiece: pieces.currentPiece,
         nextPiece: pieces.nextPiece,
       };
-    case ROTATE:
+    }
+    case ROTATE: {
       return {
         ...state,
         currentPiece: rotatePiece(state.currentPiece, state.blocks),
       };
-    case JUST_MOVE:
+    }
+    case JUST_MOVE: {
       let [newPiece, newBlocks, isCombined] = movePiece(state, action.payload);
       return {
         ...state,
@@ -46,7 +48,8 @@ export default function (state = initialState, action) {
         blocks: newBlocks,
         isCombined: isCombined,
       };
-    case INSTANT_MOVE:
+    }
+    case INSTANT_MOVE: {
       return {
         ...state,
         currentPiece: {
@@ -55,20 +58,23 @@ export default function (state = initialState, action) {
         blocks: instantLand(state),
         isCombined: true,
       };
-    case CLEAR_ROWS:
+    }
+    case CLEAR_ROWS: {
       return {
         ...state,
         blocks: clearFullRows(state.blocks, action.payload),
       };
-    case RESET:
-      console.log("blocks reducer reset.");
+    }
+    case RESET: {
       return initialState;
-    case SET_COMBINED:
-      let [flag, _] = action.payload;
+    }
+    case SET_COMBINED: {
+      let [flag] = action.payload;
       return {
         ...state,
         isCombined: flag,
       };
+    }
     default:
       return state;
   }

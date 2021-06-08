@@ -1,20 +1,18 @@
-import webpack from 'webpack';
-import {spawn} from 'child_process';
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import webpack from "webpack";
+import { spawn } from "child_process";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import ESLintPlugin from "eslint-webpack-plugin";
 
 const port = process.env.PORT || 1212;
 
 module.exports = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
 
-  mode: 'development',
+  mode: "development",
 
   output: {
-    // path: path.join(__dirname, '/dist'),
-    // filename: 'index_bundle.js',
     publicPath: `http://localhost:${port}/dist`,
-    filename: 'index_bundle.js',
+    filename: "index_bundle.js",
   },
 
   module: {
@@ -23,19 +21,19 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
         },
       },
 
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ["style-loader", "css-loader"],
       },
 
       {
         test: /\.(mp3|png)$/,
         use: {
-          loader: 'file-loader',
+          loader: "file-loader",
         },
       },
 
@@ -43,10 +41,10 @@ module.exports = {
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
         use: {
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
-            mimetype: 'application/font-woff',
+            mimetype: "application/font-woff",
           },
         },
       },
@@ -54,10 +52,10 @@ module.exports = {
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
         use: {
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
-            mimetype: 'application/font-woff',
+            mimetype: "application/font-woff",
           },
         },
       },
@@ -65,26 +63,26 @@ module.exports = {
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         use: {
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
-            mimetype: 'application/octet-stream',
+            mimetype: "application/octet-stream",
           },
         },
       },
       // EOT Font
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: 'file-loader',
+        use: "file-loader",
       },
       // SVG Font
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         use: {
-          loader: 'url-loader',
+          loader: "url-loader",
           options: {
             limit: 10000,
-            mimetype: 'image/svg+xml',
+            mimetype: "image/svg+xml",
           },
         },
       },
@@ -93,10 +91,11 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: "./src/index.html",
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.ExternalsPlugin('commonjs', ['electron']),
+    new webpack.ExternalsPlugin("commonjs", ["electron"]),
+    new ESLintPlugin(),
   ],
 
   devServer: {
@@ -104,14 +103,13 @@ module.exports = {
     hot: true,
     before() {
       if (process.env.START_HOT) {
-        console.log('Starting Main Process...');
-        spawn('npm', ['run', 'start-main-dev'], {
+        spawn("npm", ["run", "start-main-dev"], {
           shell: true,
           env: process.env,
-          stdio: 'inherit',
+          stdio: "inherit",
         })
-          .on('close', code => process.exit(code))
-          .on('error', spawnError => console.error(spawnError));
+          .on("close", (code) => process.exit(code))
+          .on("error", (spawnError) => process.exit(spawnError.code));
       }
     },
   },

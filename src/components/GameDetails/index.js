@@ -1,8 +1,11 @@
-import React, { Component } from "react";
 import "./gameDetailsStyles.css";
-import Block from "../BlockContainer/Block";
-import { gameDb, checkSettings, updateSettings } from "../../utils/database";
+
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+
+import { checkSettings, updateSettings } from "../../utils/database";
 import { playMusic, stopMusic } from "../../utils/playsound";
+import Block from "../BlockContainer/Block";
 
 class GameDetails extends Component {
   state = {
@@ -11,19 +14,12 @@ class GameDetails extends Component {
   };
 
   componentDidMount() {
-    // gameDb.settings.remove({}, {multi: true});
-    // checkSettings({volumeOn: true}, console.log);
     checkSettings(
       {
         volumeOn: true,
         musicOn: true,
       },
       (newFields) => {
-        /* if (newFields.musicOn) {
-          playMusic();
-        } else {
-          stopMusic();
-        } */
         this.setState(newFields);
       }
     );
@@ -33,7 +29,7 @@ class GameDetails extends Component {
     stopMusic();
   }
 
-  toggleVolumeButton = (e) => {
+  toggleVolumeButton = () => {
     updateSettings(
       {
         volumeOn: true,
@@ -42,7 +38,7 @@ class GameDetails extends Component {
     );
   };
 
-  toggleMusicButton = (e) => {
+  toggleMusicButton = () => {
     updateSettings(
       {
         musicOn: true,
@@ -119,5 +115,13 @@ class GameDetails extends Component {
     );
   }
 }
+
+GameDetails.propTypes = {
+  score: PropTypes.number.isRequired,
+  level: PropTypes.number.isRequired,
+  gameover: PropTypes.bool.isRequired,
+  piece: PropTypes.object.isRequired,
+  showExitMenu: PropTypes.func.isRequired,
+};
 
 export default GameDetails;

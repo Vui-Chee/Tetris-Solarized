@@ -9,7 +9,7 @@ class HiScores extends Component {
   };
 
   componentDidMount() {
-    gameDb.scores.find({}, (err, docs) => {
+    gameDb.scores.find({}, (_err, docs) => {
       docs.sort((a, b) => {
         if (a.score === b.score) {
           // Earlier person who gets that score is rank higher.

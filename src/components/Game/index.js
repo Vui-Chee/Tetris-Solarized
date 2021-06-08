@@ -27,19 +27,15 @@ import {
 } from "../../actions/pieceActions";
 
 import {
-  isRowFull,
   getFullRows,
   isBlockOvershot,
 } from "../../reducers/blocksReducer/blocks";
 
 import {
-  LEFT_KEYCODE,
-  RIGHT_KEYCODE,
   DOWN_KEYCODE,
   UP_KEYCODE,
   SPACE_KEYCODE,
   P_KEYCODE,
-  NUM_COLS,
 } from "../../utils/constants";
 
 var keyPresses = {};
@@ -75,7 +71,7 @@ class Game extends Component {
     this.detachListeners();
   }
 
-  async componentWillReceiveProps(nextProps) {
+  async UNSAFE_componentWillReceiveProps(nextProps) {
     const { isPlaying, isCombined, blocks, togglePlayMode } = nextProps;
     const { hasCompletedCountdown, fullRowIndices } = this.state;
     const { score, levelUp } = this.props;
@@ -83,7 +79,7 @@ class Game extends Component {
     if (isBlockOvershot(blocks)) {
       this.detachListeners();
       if (isPlaying) {
-        await new Promise((resolve, reject) => {
+        await new Promise((resolve) => {
           this.setState({
             gameover: true,
           });
@@ -233,7 +229,7 @@ class Game extends Component {
     // Must update state first before firing action.
     this.attachListeners();
     // Resets component level game state.
-    await new Promise((resolve, _) => {
+    await new Promise((resolve) => {
       this.setState(createGameState());
       resolve();
     });
@@ -249,7 +245,7 @@ class Game extends Component {
     // Do not allow player to quit when counting down.
     if (isPlaying && !hasCompletedCountdown) return;
     // Pause the game when the exit menu displays.
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       if (isPlaying) {
         togglePlayMode();
       }
@@ -259,7 +255,7 @@ class Game extends Component {
   };
 
   handleStayInGameState = async () => {
-    await new Promise((resolve, reject) => {
+    await new Promise((resolve) => {
       // starting playing.
       if (!this.props.isPlaying) this.props.togglePlayMode();
       resolve();
@@ -319,27 +315,25 @@ class Game extends Component {
         {gameover ? (
           <MessagePopup
             message="Game Over"
-            children={
-              <GameoverMenu
-                level={level}
-                score={score}
-                restart={this.restartGame}
-                reset={resetGame}
-              />
-            }
             customStyles={{ fontSize: "1.2rem", marginTop: "-200px" }}
-          />
+          >
+            <GameoverMenu
+              level={level}
+              score={score}
+              restart={this.restartGame}
+              reset={resetGame}
+            />
+          </MessagePopup>
         ) : showExitMenu ? (
           <MessagePopup
             message="Do you want to leave?"
-            children={
-              <ExitMenu stay={this.handleStayInGameState} reset={resetGame} />
-            }
             customStyles={{
               height: "200px",
               marginTop: "-110px",
             }}
-          />
+          >
+            <ExitMenu stay={this.handleStayInGameState} reset={resetGame} />
+          </MessagePopup>
         ) : hasCompletedCountdown ? null : isPlaying ? (
           <Countdown
             reset={() => this.setState({ hasCompletedCountdown: true })}
@@ -362,6 +356,7 @@ class Game extends Component {
 
 Game.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
+  isSpaceKeyDown: PropTypes.bool.isRequired,
   isCombined: PropTypes.bool.isRequired,
 
   movementRate: PropTypes.number.isRequired,
@@ -370,6 +365,7 @@ Game.propTypes = {
   level: PropTypes.number.isRequired,
 
   currentPiece: PropTypes.object.isRequired,
+  nextPiece: PropTypes.object.isRequired,
   blocks: PropTypes.object.isRequired,
 
   togglePlayMode: PropTypes.func.isRequired,
@@ -382,6 +378,10 @@ Game.propTypes = {
   resetGame: PropTypes.func.isRequired,
   levelUp: PropTypes.func.isRequired,
   setIsCombined: PropTypes.func.isRequired,
+};
+
+Game.defaultProps = {
+  isSpaceKeyDown: false,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,10 +1,13 @@
+import "./introPageStyles.css";
+
+import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "./introPageStyles.css";
+
+import headerImage from "../../images/tetris-header.png";
 import clickSound from "../../sounds/click.mp3";
 import { checkSettings } from "../../utils/database";
 import { playSound } from "../../utils/playsound";
-import headerImage from "../../images/tetris-header.png";
 
 const ListItemLink = ({ to, name }) => (
   <li
@@ -26,6 +29,11 @@ const ListItemLink = ({ to, name }) => (
     </Link>
   </li>
 );
+
+ListItemLink.propTypes = {
+  to: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 class IntroPage extends Component {
   render() {
