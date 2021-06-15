@@ -12,7 +12,7 @@
     "package-mac": "npm run build-all && electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/images/icons/mac/tetris-logo.icns --prune=true --out=release-builds",
     "format": "prettier -w src/**/*.js",
     "lint": "eslint src/**/*.js",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "author": "Vui Chee",
   "license": "MIT",
