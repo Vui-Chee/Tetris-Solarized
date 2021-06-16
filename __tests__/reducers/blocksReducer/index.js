@@ -9,6 +9,7 @@ import {
   Z_PIECE_2,
   B_PIECE,
 } from "../../../src/reducers/blocksReducer/pieces";
+import { NUM_COLS } from "../../../src/utils/constants";
 
 const pieces = [
   L_PIECE_1,
@@ -164,6 +165,25 @@ describe("blocks reducer", () => {
       // Not so close, so should be able to rotate
       state.currentPiece.blocks.forEach((block) => {
         block.y = 2;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(0);
+    });
+
+    it("S_PIECE cannot rotate when touching right wall in upright orientation", () => {
+      let state = createState(S_PIECE);
+      // Make S piece upright
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(1);
+      // S piece 1 block away from touching left wall
+      state.currentPiece.blocks.forEach((block) => {
+        block.y = NUM_COLS - 1;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(1);
+      // Not so close, so should be able to rotate
+      state.currentPiece.blocks.forEach((block) => {
+        block.y = NUM_COLS - 2;
       });
       state = blocksReducer(state, { type: ROTATE });
       expect(state.currentPiece.orientation).toBe(0);
