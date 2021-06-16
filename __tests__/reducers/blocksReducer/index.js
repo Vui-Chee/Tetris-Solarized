@@ -156,6 +156,27 @@ describe("blocks reducer", () => {
       expect(newState.currentPiece.orientation).toBe(0);
     });
 
+    it("L_PIECE_2 cannot rotate when touching right wall in upright orientation", () => {
+      let state = createState(L_PIECE_2);
+      state = blocksReducer(state, { type: ROTATE });
+      state = blocksReducer(state, { type: ROTATE });
+      // Ensure L piece is upside down
+      expect(state.currentPiece.orientation).toBe(2);
+      let maxY = Math.max(...state.currentPiece.blocks.map((block) => block.y));
+      // Flush L piece against wall
+      state.currentPiece.blocks.forEach((block) => {
+        block.y += NUM_COLS - maxY - 1;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(2);
+      // Move one block away from right wall, should be able to rotate.
+      state.currentPiece.blocks.forEach((block) => {
+        block.y -= 1;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(3);
+    });
+
     it("S_PIECE cannot rotate when too close to left wall in upright orientation", () => {
       let state = createState(S_PIECE);
       // Make S piece upright
