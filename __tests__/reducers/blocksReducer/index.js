@@ -58,75 +58,75 @@ describe("blocks reducer", () => {
   describe("can rotate each piece", () => {
     it("L_PIECE_1 can rotate all orientations", () => {
       const state = createState(L_PIECE_1);
-      expect(state.currentPiece.orientation).toEqual(0);
+      expect(state.currentPiece.orientation).toBe(0);
       let newState = blocksReducer(state, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(1);
+      expect(newState.currentPiece.orientation).toBe(1);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(2);
+      expect(newState.currentPiece.orientation).toBe(2);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(3);
+      expect(newState.currentPiece.orientation).toBe(3);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(0);
+      expect(newState.currentPiece.orientation).toBe(0);
     });
 
     it("L_PIECE_2 can rotate all orientations", () => {
       const state = createState(L_PIECE_2);
-      expect(state.currentPiece.orientation).toEqual(0);
+      expect(state.currentPiece.orientation).toBe(0);
       let newState = blocksReducer(state, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(1);
+      expect(newState.currentPiece.orientation).toBe(1);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(2);
+      expect(newState.currentPiece.orientation).toBe(2);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(3);
+      expect(newState.currentPiece.orientation).toBe(3);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(0);
+      expect(newState.currentPiece.orientation).toBe(0);
     });
 
     it("T_PIECE can rotate all orientations", () => {
       const state = createState(T_PIECE);
-      expect(state.currentPiece.orientation).toEqual(0);
+      expect(state.currentPiece.orientation).toBe(0);
       let newState = blocksReducer(state, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(1);
+      expect(newState.currentPiece.orientation).toBe(1);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(2);
+      expect(newState.currentPiece.orientation).toBe(2);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(3);
+      expect(newState.currentPiece.orientation).toBe(3);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(0);
+      expect(newState.currentPiece.orientation).toBe(0);
     });
 
     it("S_PIECE can rotate only in 2 orientations", () => {
       const state = createState(S_PIECE);
-      expect(state.currentPiece.orientation).toEqual(0);
+      expect(state.currentPiece.orientation).toBe(0);
       let newState = blocksReducer(state, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(1);
+      expect(newState.currentPiece.orientation).toBe(1);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(0);
+      expect(newState.currentPiece.orientation).toBe(0);
     });
 
     it("Z_PIECE_1 can rotate only in 2 orientations", () => {
       const state = createState(Z_PIECE_1);
-      expect(state.currentPiece.orientation).toEqual(0);
+      expect(state.currentPiece.orientation).toBe(0);
       let newState = blocksReducer(state, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(1);
+      expect(newState.currentPiece.orientation).toBe(1);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(0);
+      expect(newState.currentPiece.orientation).toBe(0);
     });
 
     it("Z_PIECE_2 can rotate only in 2 orientations", () => {
       const state = createState(Z_PIECE_2);
-      expect(state.currentPiece.orientation).toEqual(0);
+      expect(state.currentPiece.orientation).toBe(0);
       let newState = blocksReducer(state, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(1);
+      expect(newState.currentPiece.orientation).toBe(1);
       newState = blocksReducer(newState, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(0);
+      expect(newState.currentPiece.orientation).toBe(0);
     });
 
     it("B_PIECE cannot rotate", () => {
       const state = createState(B_PIECE);
-      expect(state.currentPiece.orientation).toEqual(0);
+      expect(state.currentPiece.orientation).toBe(0);
       let newState = blocksReducer(state, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(0);
+      expect(newState.currentPiece.orientation).toBe(0);
     });
   });
 
@@ -134,14 +134,14 @@ describe("blocks reducer", () => {
     it("L_PIECE_2 cannot rotate when flushed left to the wall", () => {
       let state = createState(L_PIECE_2);
       // Ensure L piece is standing upright
-      expect(state.currentPiece.orientation).toEqual(0);
+      expect(state.currentPiece.orientation).toBe(0);
       let minY = Math.min(...state.currentPiece.blocks.map((block) => block.y));
       // Flush L piece against wall
       state.currentPiece.blocks.forEach((block) => {
         block.y -= minY;
       });
       const newState = blocksReducer(state, { type: ROTATE });
-      expect(newState.currentPiece.orientation).toEqual(0);
+      expect(newState.currentPiece.orientation).toBe(0);
     });
 
     it("S_PIECE cannot rotate when too close to left wall in upright orientation", () => {
