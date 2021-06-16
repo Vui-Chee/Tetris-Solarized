@@ -143,5 +143,24 @@ describe("blocks reducer", () => {
       const newState = blocksReducer(state, { type: ROTATE });
       expect(newState.currentPiece.orientation).toEqual(0);
     });
+
+    it("S_PIECE cannot rotate when too close to left wall in upright orientation", () => {
+      let state = createState(S_PIECE);
+      // Make S piece upright
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toEqual(1);
+      // S piece 1 block away from touching left wall
+      state.currentPiece.blocks.forEach((block) => {
+        block.y = 1;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toEqual(1);
+      // Now make S piece touch left wall
+      state.currentPiece.blocks.forEach((block) => {
+        block.y = 0;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toEqual(1);
+    });
   });
 });
