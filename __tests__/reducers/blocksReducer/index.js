@@ -143,11 +143,31 @@ describe("blocks reducer", () => {
   });
 
   describe("cannot rotate into certain orientations when next to wall", () => {
+    it("L_PIECE_1 cannot rotate when touching left wall in upside down orientation", () => {
+      let state = createState(L_PIECE_1);
+      state = blocksReducer(state, { type: ROTATE });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(2);
+      let minY = Math.min(...state.currentPiece.blocks.map((block) => block.y));
+      // Touching left wall in upside position, cannot rotate.
+      state.currentPiece.blocks.forEach((block) => {
+        block.y -= minY;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(2);
+      // Move 1 block away, should be able to move.
+      state.currentPiece.blocks.forEach((block) => {
+        block.y += 1;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(3);
+    });
+
     it("L_PIECE_2 cannot rotate when touching left wall in upright orientation", () => {
       let state = createState(L_PIECE_2);
       // Ensure L piece is standing upright
       expect(state.currentPiece.orientation).toBe(0);
-      let minY = Math.min(...L_PIECE_2.blocks.map((block) => block.y));
+      let minY = Math.min(...state.currentPiece.blocks.map((block) => block.y));
       // Flush L piece against wall
       state.currentPiece.blocks.forEach((block) => {
         block.y -= minY;
@@ -156,7 +176,7 @@ describe("blocks reducer", () => {
       expect(newState.currentPiece.orientation).toBe(0);
     });
 
-    it("L_PIECE_2 cannot rotate when touching right wall in upright orientation", () => {
+    it("L_PIECE_2 cannot rotate when touching right wall in upside down orientation", () => {
       let state = createState(L_PIECE_2);
       state = blocksReducer(state, { type: ROTATE });
       state = blocksReducer(state, { type: ROTATE });
