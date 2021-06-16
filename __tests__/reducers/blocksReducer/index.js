@@ -31,10 +31,21 @@ function createState(
   b = {},
   i = false
 ) {
+  let newBlocks = {};
+  Object.keys(b).forEach((key) => {
+    newBlocks[key] = { ...b[key] };
+  });
+
   return {
-    currentPiece: c,
-    nextPiece: n,
-    blocks: b,
+    currentPiece: {
+      ...c,
+      blocks: c.blocks.map((block) => ({ ...block })),
+    },
+    nextPiece: {
+      ...n,
+      blocks: n.blocks.map((block) => ({ ...block })),
+    },
+    blocks: newBlocks,
     isCombined: i,
   };
 }
@@ -132,11 +143,11 @@ describe("blocks reducer", () => {
   });
 
   describe("cannot rotate into certain orientations when next to wall", () => {
-    it("L_PIECE_2 cannot rotate when flushed left to the wall", () => {
+    it("L_PIECE_2 cannot rotate when touching left wall in upright orientation", () => {
       let state = createState(L_PIECE_2);
       // Ensure L piece is standing upright
       expect(state.currentPiece.orientation).toBe(0);
-      let minY = Math.min(...state.currentPiece.blocks.map((block) => block.y));
+      let minY = Math.min(...L_PIECE_2.blocks.map((block) => block.y));
       // Flush L piece against wall
       state.currentPiece.blocks.forEach((block) => {
         block.y -= minY;
