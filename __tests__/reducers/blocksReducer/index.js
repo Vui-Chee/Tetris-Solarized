@@ -130,5 +130,18 @@ describe("blocks reducer", () => {
     });
   });
 
-  // describe("cannot rotate into certain orientations when next to wall")
+  describe("cannot rotate into certain orientations when next to wall", () => {
+    it("L_PIECE_2 cannot rotate when flushed left to the wall", () => {
+      let state = createState(L_PIECE_2);
+      // Ensure L piece is standing upright
+      expect(state.currentPiece.orientation).toEqual(0);
+      let minY = Math.min(...state.currentPiece.blocks.map((block) => block.y));
+      // Flush L piece against wall
+      state.currentPiece.blocks.forEach((block) => {
+        block.y -= minY;
+      });
+      const newState = blocksReducer(state, { type: ROTATE });
+      expect(newState.currentPiece.orientation).toEqual(0);
+    });
+  });
 });
