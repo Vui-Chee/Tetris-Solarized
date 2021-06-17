@@ -67,7 +67,7 @@ describe("blocks reducer", () => {
     expect(foundNextPiece).not.toBe(-1);
   });
 
-  describe("can rotate each piece", () => {
+  describe("Can rotate each piece", () => {
     it("L_PIECE_1 can rotate all orientations", () => {
       const state = createState(L_PIECE_1);
       expect(state.currentPiece.orientation).toBe(0);
@@ -142,7 +142,7 @@ describe("blocks reducer", () => {
     });
   });
 
-  describe("cannot rotate into certain orientations when next to wall", () => {
+  describe("Cannot rotate into certain orientations when next to wall", () => {
     it("L_PIECE_1 cannot rotate when touching left wall in upside down orientation", () => {
       let state = createState(L_PIECE_1);
       state = blocksReducer(state, { type: ROTATE });
@@ -364,6 +364,49 @@ describe("blocks reducer", () => {
       expect(
         state.currentPiece.blocks.every((blk) => blk.x === expectedX)
       ).toBe(true);
+    });
+
+    it("T_PIECE", () => {
+      let state = createState(T_PIECE);
+      // First rotation
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(1);
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -3, y: 4, color: 4, type: 1 },
+        { x: -2, y: 3, color: 4, type: 1 },
+        { x: -2, y: 4, color: 4, type: 2 },
+        { x: -1, y: 4, color: 4, type: 1 },
+      ]);
+
+      // Second rotation
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(2);
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -2, y: 5, color: 4, type: 1 },
+        { x: -3, y: 4, color: 4, type: 1 },
+        { x: -2, y: 4, color: 4, type: 2 },
+        { x: -2, y: 3, color: 4, type: 1 },
+      ]);
+
+      // Third rotation
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(3);
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -1, y: 4, color: 4, type: 1 },
+        { x: -2, y: 5, color: 4, type: 1 },
+        { x: -2, y: 4, color: 4, type: 2 },
+        { x: -3, y: 4, color: 4, type: 1 },
+      ]);
+
+      // Last rotation back into initial orientation
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(0);
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -2, y: 3, color: 4, type: 1 },
+        { x: -1, y: 4, color: 4, type: 1 },
+        { x: -2, y: 4, color: 4, type: 2 },
+        { x: -2, y: 5, color: 4, type: 1 },
+      ]);
     });
   });
 });
