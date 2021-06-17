@@ -345,4 +345,25 @@ describe("blocks reducer", () => {
       expect(state.currentPiece.orientation).toBe(0);
     });
   });
+
+  describe("Each piece retains shape after rotation", () => {
+    it("S_PIECE", () => {
+      let state = createState(S_PIECE);
+      // Rotate into orientation 1
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(1);
+      const expectedY = state.currentPiece.blocks[0].y;
+      expect(
+        state.currentPiece.blocks.every((blk) => blk.y === expectedY)
+      ).toBe(true);
+
+      // Rotate back into orientation 0
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(0);
+      const expectedX = state.currentPiece.blocks[0].x;
+      expect(
+        state.currentPiece.blocks.every((blk) => blk.x === expectedX)
+      ).toBe(true);
+    });
+  });
 });
