@@ -408,5 +408,45 @@ describe("blocks reducer", () => {
         { x: -2, y: 5, color: 4, type: 1 },
       ]);
     });
+
+    it("L_PIECE_1", () => {
+      let state = createState(L_PIECE_1);
+
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(1);
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -3, y: 3, color: 0, type: 0 },
+        { x: -2, y: 3, color: 0, type: 1 },
+        { x: -2, y: 4, color: 0, type: 2 },
+        { x: -2, y: 5, color: 0, type: 1 },
+      ]);
+
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(2);
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -3, y: 5, color: 0, type: 0 },
+        { x: -3, y: 4, color: 0, type: 1 },
+        { x: -2, y: 4, color: 0, type: 2 },
+        { x: -1, y: 4, color: 0, type: 1 },
+      ]);
+
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(3);
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -1, y: 5, color: 0, type: 0 },
+        { x: -2, y: 5, color: 0, type: 1 },
+        { x: -2, y: 4, color: 0, type: 2 },
+        { x: -2, y: 3, color: 0, type: 1 },
+      ]);
+
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(0);
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -1, y: 3, color: 0, type: 0 },
+        { x: -1, y: 4, color: 0, type: 1 },
+        { x: -2, y: 4, color: 0, type: 2 },
+        { x: -3, y: 4, color: 0, type: 1 },
+      ]);
+    });
   });
 });
