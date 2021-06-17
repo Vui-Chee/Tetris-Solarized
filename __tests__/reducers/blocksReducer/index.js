@@ -322,5 +322,27 @@ describe("blocks reducer", () => {
       state = blocksReducer(state, { type: ROTATE });
       expect(state.currentPiece.orientation).toBe(0);
     });
+
+    it("Z_PIECE_2 cannot rotate against right wall in upright orientation", () => {
+      let state = createState(Z_PIECE_2);
+      // Make Z piece 2 upright
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(1);
+
+      // Z piece 2 touching right wall with flat side
+      let maxY = Math.max(...state.currentPiece.blocks.map((block) => block.y));
+      state.currentPiece.blocks.forEach((block) => {
+        block.y += NUM_COLS - maxY - 1;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(1);
+
+      // Not so close, so should be able to rotate
+      state.currentPiece.blocks.forEach((block) => {
+        block.y -= 1;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(0);
+    });
   });
 });
