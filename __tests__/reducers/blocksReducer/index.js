@@ -488,5 +488,27 @@ describe("blocks reducer", () => {
         { x: -3, y: 4, color: 3, type: 1 },
       ]);
     });
+
+    it("Z_PIECE_1", () => {
+      let state = createState(Z_PIECE_1);
+
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(1);
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -2, y: 5, color: 1, type: 0 },
+        { x: -1, y: 5, color: 1, type: 1 },
+        { x: -1, y: 4, color: 1, type: 2 },
+        { x: 0, y: 4, color: 1, type: 1 },
+      ]);
+
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(0);
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -2, y: 3, color: 1, type: 0 },
+        { x: -2, y: 4, color: 1, type: 1 },
+        { x: -1, y: 4, color: 1, type: 2 },
+        { x: -1, y: 5, color: 1, type: 1 },
+      ]);
+    });
   });
 });
