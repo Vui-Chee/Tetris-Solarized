@@ -259,5 +259,46 @@ describe("blocks reducer", () => {
       state = blocksReducer(state, { type: ROTATE });
       expect(state.currentPiece.orientation).toBe(0);
     });
+
+    it("T_PIECE cannot rotate when flat side is touching wall", () => {
+      let state = createState(T_PIECE);
+      // Make S piece upright
+      state = blocksReducer(state, { type: ROTATE });
+      state = blocksReducer(state, { type: ROTATE });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(3);
+
+      // T piece touching left wall with flat side
+      let minY = Math.min(...state.currentPiece.blocks.map((block) => block.y));
+      state.currentPiece.blocks.forEach((block) => {
+        block.y -= minY;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(3);
+
+      // Not so close, so should be able to rotate
+      state.currentPiece.blocks.forEach((block) => {
+        block.y += 1;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(0);
+
+      // Now for placing T piece flat side touching right wall
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(1);
+      let maxY = Math.max(...state.currentPiece.blocks.map((block) => block.y));
+      state.currentPiece.blocks.forEach((block) => {
+        block.y += NUM_COLS - maxY - 1;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(1);
+
+      // Not so close, so should be able to rotate
+      state.currentPiece.blocks.forEach((block) => {
+        block.y -= 1;
+      });
+      state = blocksReducer(state, { type: ROTATE });
+      expect(state.currentPiece.orientation).toBe(2);
+    });
   });
 });
