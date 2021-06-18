@@ -55,20 +55,29 @@ function createState(
   };
 }
 
-function testMove(piece, directions, expectedPieceBlocks, numRotations = 0) {
-  let state = createState(piece);
-  for (let i = 0; i < numRotations; i++) {
-    state = blocksReducer(state, { type: ROTATE });
-  }
-  const initialOrientation = state.currentPiece.orientation;
+function moveCurrentPiece(state, directions, numMoves = 1) {
   const payload = {};
   directions.forEach((direction) => {
     payload[direction] = true;
   });
-  state = blocksReducer(state, {
-    type: JUST_MOVE,
-    payload,
-  });
+  for (let i = 0; i < numMoves; i++) {
+    state = blocksReducer(state, { type: JUST_MOVE, payload });
+  }
+  return state;
+}
+
+function rotateCurrentPiece(state, numRotations) {
+  for (let i = 0; i < numRotations; i++) {
+    state = blocksReducer(state, { type: ROTATE });
+  }
+  return state;
+}
+
+function testMove(piece, directions, expectedPieceBlocks, numRotations = 0) {
+  let state = createState(piece);
+  state = rotateCurrentPiece(state, numRotations);
+  state = moveCurrentPiece(state, directions);
+  const initialOrientation = state.currentPiece.orientation;
   expect(state.currentPiece.blocks).toEqual(expectedPieceBlocks);
   expect(state.currentPiece.orientation).toBe(initialOrientation);
   expect(state.blocks).toEqual({});
