@@ -165,6 +165,33 @@ describe("blocks reducer", () => {
     });
   });
 
+  describe("Can move piece and combine with landed blocks", () => {
+    // Landed L_PIECE_1
+    const landedBlocks = {
+      15: { 4: 0 },
+      16: { 4: 0 },
+      17: { 3: 0, 4: 0 },
+    };
+    // Ignore
+    const nextPiece = { blocks: [] };
+
+    it("L_PIECE_1", () => {
+      let state = createState(L_PIECE_1, nextPiece, landedBlocks);
+      // Must bring L piece closer to landed blocks
+      state = moveCurrentPiece(state, [DOWN_KEYCODE], 16);
+      // Current piece is removed when combined with landed blocks
+      expect(state.currentPiece).toEqual({ blocks: [] });
+      expect(state.blocks).toEqual({
+        12: { 4: 0 },
+        13: { 4: 0 },
+        14: { 3: 0, 4: 0 },
+        15: { 4: 0 },
+        16: { 4: 0 },
+        17: { 3: 0, 4: 0 },
+      });
+    });
+  });
+
   describe("Cannot rotate into certain orientations when next to wall", () => {
     it("L_PIECE_1 cannot rotate when touching left wall in upside down orientation", () => {
       let state = createState(L_PIECE_1);
