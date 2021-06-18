@@ -55,6 +55,25 @@ function createState(
   };
 }
 
+function testMove(piece, directions, expectedPieceBlocks, numRotations = 0) {
+  let state = createState(piece);
+  for (let i = 0; i < numRotations; i++) {
+    state = blocksReducer(state, { type: ROTATE });
+  }
+  const initialOrientation = state.currentPiece.orientation;
+  const payload = {};
+  directions.forEach((direction) => {
+    payload[direction] = true;
+  });
+  state = blocksReducer(state, {
+    type: JUST_MOVE,
+    payload,
+  });
+  expect(state.currentPiece.blocks).toEqual(expectedPieceBlocks);
+  expect(state.currentPiece.orientation).toBe(initialOrientation);
+  expect(state.blocks).toEqual({});
+}
+
 describe("blocks reducer", () => {
   it("can create new piece from initial state", () => {
     const state = createState();
@@ -73,43 +92,42 @@ describe("blocks reducer", () => {
   });
 
   describe("Can move piece left,right,down (no combine blocks)", () => {
-    function testMove(piece, direction, expectedPieceBlocks, numRotations = 0) {
-      let state = createState(piece);
-      for (let i = 0; i < numRotations; i++) {
-        state = blocksReducer(state, { type: ROTATE });
-      }
-      const initialOrientation = state.currentPiece.orientation;
-      state = blocksReducer(state, {
-        type: JUST_MOVE,
-        payload: {
-          [direction]: true,
-        },
-      });
-      expect(state.currentPiece.blocks).toEqual(expectedPieceBlocks);
-      expect(state.currentPiece.orientation).toBe(initialOrientation);
-      expect(state.blocks).toEqual({});
-    }
-
     it("L_PIECE_1 orientation 0", () => {
-      testMove(L_PIECE_1, LEFT_KEYCODE, [
-        { x: -1, y: 2, color: 0, type: 0 },
-        { x: -1, y: 3, color: 0, type: 1 },
-        { x: -2, y: 3, color: 0, type: 2 },
-        { x: -3, y: 3, color: 0, type: 1 },
-      ]);
-      testMove(L_PIECE_1, RIGHT_KEYCODE, [
-        { x: -1, y: 4, color: 0, type: 0 },
-        { x: -1, y: 5, color: 0, type: 1 },
-        { x: -2, y: 5, color: 0, type: 2 },
-        { x: -3, y: 5, color: 0, type: 1 },
-      ]);
-      testMove(L_PIECE_1, DOWN_KEYCODE, [
-        { x: 0, y: 3, color: 0, type: 0 },
-        { x: 0, y: 4, color: 0, type: 1 },
-        { x: -1, y: 4, color: 0, type: 2 },
-        { x: -2, y: 4, color: 0, type: 1 },
-      ]);
+      testMove(
+        L_PIECE_1,
+        [LEFT_KEYCODE],
+        [
+          { x: -1, y: 2, color: 0, type: 0 },
+          { x: -1, y: 3, color: 0, type: 1 },
+          { x: -2, y: 3, color: 0, type: 2 },
+          { x: -3, y: 3, color: 0, type: 1 },
+        ]
+      );
+      testMove(
+        L_PIECE_1,
+        [RIGHT_KEYCODE],
+        [
+          { x: -1, y: 4, color: 0, type: 0 },
+          { x: -1, y: 5, color: 0, type: 1 },
+          { x: -2, y: 5, color: 0, type: 2 },
+          { x: -3, y: 5, color: 0, type: 1 },
+        ]
+      );
+      testMove(
+        L_PIECE_1,
+        [DOWN_KEYCODE],
+        [
+          { x: 0, y: 3, color: 0, type: 0 },
+          { x: 0, y: 4, color: 0, type: 1 },
+          { x: -1, y: 4, color: 0, type: 2 },
+          { x: -2, y: 4, color: 0, type: 1 },
+        ]
+      );
     });
+  });
+
+  describe("Can move piece in 2 directions (left/right, down)", () => {
+    //
   });
 
   describe("Cannot rotate into certain orientations when next to wall", () => {
