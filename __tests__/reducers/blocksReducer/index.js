@@ -1,5 +1,5 @@
 import blocksReducer from "../../../src/reducers/blocksReducer";
-import { NEW_PIECE, ROTATE } from "../../../src/actions/types";
+import { JUST_MOVE, NEW_PIECE, ROTATE } from "../../../src/actions/types";
 import {
   L_PIECE_1,
   T_PIECE,
@@ -9,7 +9,12 @@ import {
   Z_PIECE_2,
   B_PIECE,
 } from "../../../src/reducers/blocksReducer/pieces";
-import { NUM_COLS } from "../../../src/utils/constants";
+import {
+  LEFT_KEYCODE,
+  RIGHT_KEYCODE,
+  DOWN_KEYCODE,
+  NUM_COLS,
+} from "../../../src/utils/constants";
 
 const pieces = [
   L_PIECE_1,
@@ -65,6 +70,46 @@ describe("blocks reducer", () => {
       (piece) => piece.type === newState.nextPiece.type
     );
     expect(foundNextPiece).not.toBe(-1);
+  });
+
+  describe("Can move piece left,right,down (no combine blocks)", () => {
+    function testMove(piece, direction, expectedPieceBlocks, numRotations = 0) {
+      let state = createState(piece);
+      for (let i = 0; i < numRotations; i++) {
+        state = blocksReducer(state, { type: ROTATE });
+      }
+      const initialOrientation = state.currentPiece.orientation;
+      state = blocksReducer(state, {
+        type: JUST_MOVE,
+        payload: {
+          [direction]: true,
+        },
+      });
+      expect(state.currentPiece.blocks).toEqual(expectedPieceBlocks);
+      expect(state.currentPiece.orientation).toBe(initialOrientation);
+      expect(state.blocks).toEqual({});
+    }
+
+    it("L_PIECE_1 orientation 0", () => {
+      testMove(L_PIECE_1, LEFT_KEYCODE, [
+        { x: -1, y: 2, color: 0, type: 0 },
+        { x: -1, y: 3, color: 0, type: 1 },
+        { x: -2, y: 3, color: 0, type: 2 },
+        { x: -3, y: 3, color: 0, type: 1 },
+      ]);
+      testMove(L_PIECE_1, RIGHT_KEYCODE, [
+        { x: -1, y: 4, color: 0, type: 0 },
+        { x: -1, y: 5, color: 0, type: 1 },
+        { x: -2, y: 5, color: 0, type: 2 },
+        { x: -3, y: 5, color: 0, type: 1 },
+      ]);
+      testMove(L_PIECE_1, DOWN_KEYCODE, [
+        { x: 0, y: 3, color: 0, type: 0 },
+        { x: 0, y: 4, color: 0, type: 1 },
+        { x: -1, y: 4, color: 0, type: 2 },
+        { x: -2, y: 4, color: 0, type: 1 },
+      ]);
+    });
   });
 
   describe("Cannot rotate into certain orientations when next to wall", () => {
