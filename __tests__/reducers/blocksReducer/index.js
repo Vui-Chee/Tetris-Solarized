@@ -92,7 +92,7 @@ describe("blocks reducer", () => {
   });
 
   describe("Can move piece left,right,down (no combine blocks)", () => {
-    it("L_PIECE_1 orientation 0", () => {
+    it("L_PIECE_1", () => {
       testMove(
         L_PIECE_1,
         [LEFT_KEYCODE],
@@ -127,7 +127,18 @@ describe("blocks reducer", () => {
   });
 
   describe("Can move piece in 2 directions (left/right, down)", () => {
-    //
+    it("L_PIECE_1", () => {
+      testMove(
+        L_PIECE_1,
+        [LEFT_KEYCODE, DOWN_KEYCODE],
+        [
+          { x: 0, y: 2, color: 0, type: 0 },
+          { x: 0, y: 3, color: 0, type: 1 },
+          { x: -1, y: 3, color: 0, type: 2 },
+          { x: -2, y: 3, color: 0, type: 1 },
+        ]
+      );
+    });
   });
 
   describe("Cannot rotate into certain orientations when next to wall", () => {
