@@ -147,6 +147,16 @@ describe("blocks reducer", () => {
           { x: -2, y: 3, color: 0, type: 1 },
         ]
       );
+      testMove(
+        L_PIECE_1,
+        [RIGHT_KEYCODE, DOWN_KEYCODE],
+        [
+          { x: 0, y: 4, color: 0, type: 0 },
+          { x: 0, y: 5, color: 0, type: 1 },
+          { x: -1, y: 5, color: 0, type: 2 },
+          { x: -2, y: 5, color: 0, type: 1 },
+        ]
+      );
     });
   });
 
