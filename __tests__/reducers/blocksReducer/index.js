@@ -217,6 +217,28 @@ describe("blocks reducer", () => {
     });
   });
 
+  describe("Cannot move into walls", () => {
+    it("L_PIECE_1", () => {
+      let state = createState(L_PIECE_1);
+      state = moveCurrentPiece(state, [LEFT_KEYCODE], 10);
+      // Cannot move into left wall
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -1, y: 0, color: 0, type: 0 },
+        { x: -1, y: 1, color: 0, type: 1 },
+        { x: -2, y: 1, color: 0, type: 2 },
+        { x: -3, y: 1, color: 0, type: 1 },
+      ]);
+      state = moveCurrentPiece(state, [RIGHT_KEYCODE], 10);
+      // Cannot move into right wall
+      expect(state.currentPiece.blocks).toEqual([
+        { x: -1, y: 8, color: 0, type: 0 },
+        { x: -1, y: 9, color: 0, type: 1 },
+        { x: -2, y: 9, color: 0, type: 2 },
+        { x: -3, y: 9, color: 0, type: 1 },
+      ]);
+    });
+  });
+
   describe("Cannot rotate into certain orientations when next to wall", () => {
     it("L_PIECE_1 cannot rotate when touching left wall in upside down orientation", () => {
       let state = createState(L_PIECE_1);
