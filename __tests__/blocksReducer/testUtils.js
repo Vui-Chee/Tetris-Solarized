@@ -1,8 +1,8 @@
 import {
   isOutOfBounds,
   isMoveValid,
-} from "../../../src/reducers/blocksReducer/movement.js";
-import { NUM_COLS, NUM_ROWS } from "../../../src/utils/constants";
+} from "../../src/reducers/blocksReducer/movement.js";
+import { NUM_COLS, NUM_ROWS } from "../../src/utils/constants";
 
 describe("isOutOfBounds", () => {
   it("coordinates within dimensions", () => {
