@@ -51,17 +51,13 @@ export function rotateCurrentPiece(state, numRotations) {
   return state;
 }
 
-export function testMove(
-  piece,
-  directions,
-  expectedPieceBlocks,
-  numRotations = 0
-) {
+export function testMove(piece, directions, expectedPieceBlocks, numMoves = 1) {
   let state = createState(piece);
-  state = rotateCurrentPiece(state, numRotations);
-  state = moveCurrentPiece(state, directions);
   const initialOrientation = state.currentPiece.orientation;
+  const initialType = state.currentPiece.type;
+  state = moveCurrentPiece(state, directions, numMoves);
   expect(state.currentPiece.blocks).toEqual(expectedPieceBlocks);
   expect(state.currentPiece.orientation).toBe(initialOrientation);
+  expect(state.currentPiece.type).toBe(initialType);
   expect(state.blocks).toEqual({});
 }
