@@ -1,4 +1,6 @@
-import blocksReducer from "../../src/reducers/blocksReducer";
+import blocksReducer, {
+  initialState as blocksReducerState,
+} from "../../src/reducers/blocksReducer";
 import { JUST_MOVE, ROTATE } from "../../src/actions/types";
 
 export function createState(
@@ -17,6 +19,7 @@ export function createState(
   });
 
   return {
+    ...blocksReducerState,
     currentPiece: {
       ...c,
       blocks: c.blocks.map((block) => ({ ...block })),
