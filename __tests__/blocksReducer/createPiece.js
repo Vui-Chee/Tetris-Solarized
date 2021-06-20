@@ -22,19 +22,24 @@ const pieces = [
 ];
 
 describe("blocks reducer", () => {
-  it("can create new piece from initial state", () => {
-    const state = createState();
-    const newState = blocksReducer(state, { type: NEW_PIECE });
-    expect(newState.isCombined).toBe(false);
-    expect(newState.blocks).toStrictEqual({});
+  const state = createState();
+  const newState = blocksReducer(state, { type: NEW_PIECE });
+
+  it("should create valid current piece", () => {
     // The new piece created must match one of the pieces.
-    const foundCurrentPiece = pieces.findIndex(
+    const index = pieces.findIndex(
       (piece) => piece.type === newState.currentPiece.type
     );
-    expect(foundCurrentPiece).not.toBe(-1);
-    const foundNextPiece = pieces.findIndex(
+    expect(index).not.toBe(-1);
+    expect(newState.currentPiece).toEqual(pieces[index]);
+  });
+
+  it("should create valid next piece", () => {
+    // The new piece created must match one of the pieces.
+    const index = pieces.findIndex(
       (piece) => piece.type === newState.nextPiece.type
     );
-    expect(foundNextPiece).not.toBe(-1);
+    expect(index).not.toBe(-1);
+    expect(newState.nextPiece).toEqual(pieces[index]);
   });
 });
